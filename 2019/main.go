@@ -28,7 +28,10 @@ func main() {
 		case "3":
 			solution.SolveDay3()
 			break
-		case "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25":
+		case "4":
+			solution.SolveDay4()
+			break
+		case "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25":
 			fmt.Println("Solution is not ready yet")
 			break
 		case "quit":
