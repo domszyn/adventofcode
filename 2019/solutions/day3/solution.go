@@ -110,13 +110,13 @@ func (p *Point) stepsTo(line []Point) int {
 	return steps
 }
 
-func GetAnswers() []int {
+func GetAnswers() (closestIntersection, minSteps int) {
 	input := readInput()
 	lineA := getLinePoints(input[0])
 	lineB := getLinePoints(input[1])
 	intersections := findIntersections(lineA, lineB)
-	closestIntersection := math.MaxInt32
-	minSteps := math.MaxInt32
+	closestIntersection = math.MaxInt32
+	minSteps = math.MaxInt32
 
 	for _, intersection := range intersections {
 		if d := intersection.distanceTo(); d < closestIntersection {
@@ -130,5 +130,5 @@ func GetAnswers() []int {
 		}
 	}
 
-	return []int{closestIntersection, minSteps}
+	return
 }

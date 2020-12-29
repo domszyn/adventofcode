@@ -7,6 +7,7 @@ import (
 	"github.com/domszyn/adventofcode/2019/solutions/day1"
 	"github.com/domszyn/adventofcode/2019/solutions/day2"
 	"github.com/domszyn/adventofcode/2019/solutions/day3"
+	"github.com/domszyn/adventofcode/2019/solutions/day4"
 )
 
 type Solution struct {
@@ -40,10 +41,21 @@ func (s *Solution) SolveDay2() {
 
 func (s *Solution) SolveDay3() {
 	start := time.Now()
-	answers := day3.GetAnswers()
+	closestIntersection, minSteps := day3.GetAnswers()
 
-	s.Part1 = answers[0]
-	s.Part2 = answers[1]
+	s.Part1 = closestIntersection
+	s.Part2 = minSteps
+
+	s.ExecTime = time.Since(start)
+	s.Print()
+}
+
+func (s *Solution) SolveDay4() {
+	start := time.Now()
+	valid, validSkipLargerGroups := day4.GetAnswers()
+
+	s.Part1 = valid
+	s.Part2 = validSkipLargerGroups
 
 	s.ExecTime = time.Since(start)
 	s.Print()
