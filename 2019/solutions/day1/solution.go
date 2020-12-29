@@ -1,12 +1,10 @@
-package solutions
+package day1
 
 import (
 	"bufio"
-	"log"
 	"math"
-	"os"
 	"strconv"
-	"time"
+	"strings"
 )
 
 func calcModuleFuel(mass int64) int64 {
@@ -22,13 +20,8 @@ func calcAdditionalFuel(mass int64) int64 {
 	return fuel + calcAdditionalFuel(fuel)
 }
 
-func fuelRequirement(accountForFuelMass bool) int64 {
-	file, err := os.Open("./input/day01.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
+func FuelRequirement(accountForFuelMass bool) int64 {
+	scanner := bufio.NewScanner(strings.NewReader(Input))
 	scanner.Split(bufio.ScanLines)
 	var totalFuel int64 = 0
 
@@ -42,11 +35,4 @@ func fuelRequirement(accountForFuelMass bool) int64 {
 	}
 
 	return totalFuel
-}
-
-func (s *Solution) SolveDay1() {
-	start := time.Now()
-	s.Part1 = fuelRequirement(false)
-	s.Part2 = fuelRequirement(true)
-	s.ExecTime = time.Since(start)
 }
