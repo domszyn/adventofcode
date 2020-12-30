@@ -3,6 +3,7 @@ package toolbox
 import (
 	"fmt"
 	"strconv"
+	"sync"
 )
 
 type Replacement struct {
@@ -17,14 +18,19 @@ const (
 
 type Program []int
 
-func (p *Program) copy(replacements []Replacement) Program {
+func (p *Program) Copy() Program {
 	var program = make(Program, len(*p))
 	copy(program, *p)
+	return program
+}
+
+func (p *Program) Patch(replacements []Replacement) *Program {
+	program := p.Copy()
 	for _, r := range replacements {
 		program[r.Position] = r.Value
 	}
 
-	return program
+	return &program
 }
 
 type Parameter struct {
@@ -69,19 +75,17 @@ func readNextInstruction(memory []int) (i Instruction) {
 	return
 }
 
-func IntCode(program Program, replacements []Replacement) int {
-	return IntCodeWithInput(program, replacements, 0)
-}
-
-func IntCodeWithInput(program Program, replacements []Replacement, input int) int {
-	program = program.copy(replacements)
-	var output *int
+func (p *Program) IntCode(input <-chan int, output chan<- int, wg *sync.WaitGroup) Program {
+	program := p.Copy()
+	if wg != nil {
+		defer wg.Done()
+	}
 
 	instructionPointer := 0
 	for instructionPointer < len(program) {
 		instruction := readNextInstruction(program[instructionPointer:])
 
-		if instruction.Opcode == 99 || (output != nil && *output > 0) {
+		if instruction.Opcode == 99 {
 			break
 		}
 
@@ -111,7 +115,10 @@ func IntCodeWithInput(program Program, replacements []Replacement, input int) in
 			program[instruction.Parameters[2].Value] = value1 * value2
 			break
 		case 3:
-			program[instruction.Parameters[0].Value] = input
+			select {
+			case v := <-input:
+				program[instruction.Parameters[0].Value] = v
+			}
 			break
 		case 4:
 			value := instruction.Parameters[0].Value
@@ -120,7 +127,7 @@ func IntCodeWithInput(program Program, replacements []Replacement, input int) in
 				value = program[instruction.Parameters[0].Value]
 			}
 
-			output = &value
+			output <- value
 			break
 		case 5:
 			value := instruction.Parameters[0].Value
@@ -182,9 +189,5 @@ func IntCodeWithInput(program Program, replacements []Replacement, input int) in
 
 	}
 
-	if output != nil {
-		return *output
-	} else {
-		return program[0]
-	}
+	return program
 }

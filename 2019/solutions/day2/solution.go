@@ -7,7 +7,7 @@ import (
 	"github.com/domszyn/adventofcode/2019/toolbox"
 )
 
-func readInput() []int {
+func readInput() toolbox.Program {
 	var ints []int
 	for _, s := range strings.Split(Input, ",") {
 		number, _ := strconv.Atoi(s)
@@ -18,20 +18,34 @@ func readInput() []int {
 }
 
 func SolvePart1() int {
-	return toolbox.IntCode(readInput(), []toolbox.Replacement{
+	program := readInput()
+
+	patches := []toolbox.Replacement{
 		{Position: 1, Value: 12},
 		{Position: 2, Value: 2},
-	})
+	}
+	input := make(chan int)
+	output := make(chan int)
+
+	result := program.Patch(patches).IntCode(input, output, nil)
+	return result[0]
 }
 
 func SolvePart2() int {
+	program := readInput()
+
 	for n := 0; n < 100; n++ {
 		for v := 0; v < 100; v++ {
-			result := toolbox.IntCode(readInput(), []toolbox.Replacement{
+			patches := []toolbox.Replacement{
 				{Position: 1, Value: n},
 				{Position: 2, Value: v},
-			})
-			if result == 19690720 {
+			}
+
+			input := make(chan int)
+			output := make(chan int)
+			result := program.Patch(patches).IntCode(input, output, nil)
+
+			if result[0] == 19690720 {
 				return 100*n + v
 			}
 		}
