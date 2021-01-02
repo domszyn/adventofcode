@@ -1,6 +1,7 @@
 package toolbox
 
 import (
+	"sync"
 	"testing"
 )
 
@@ -150,5 +151,57 @@ func TestCombined(t *testing.T) {
 	select {
 	case result := <-output:
 		assertProgram(t, program, 9, result, 1001)
+	}
+}
+
+func TestRelativeBase1(t *testing.T) {
+	var program Program = []int{109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99}
+
+	input := make(chan int)
+	output := make(chan int, 16)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go program.IntCode(input, output, &wg)
+	wg.Wait()
+	close(output)
+
+	var result []int
+	for v := range output {
+		result = append(result, v)
+	}
+
+	if len(program) != len(result) {
+		t.Errorf("IntCode(%#v) should return itself, got: %#v", program, program)
+	}
+
+	for i := 0; i < len(program); i++ {
+		if program[i] != result[i] {
+			t.Errorf("IntCode(%#v) should return itself, got: %#v", program, program)
+			break
+		}
+	}
+}
+
+func TestRelativeBase2(t *testing.T) {
+	var program Program = []int{1102, 34915192, 34915192, 7, 4, 7, 99, 0}
+
+	input := make(chan int)
+	output := make(chan int)
+	go program.IntCode(input, output, nil)
+	select {
+	case result := <-output:
+		assertProgram(t, program, 0, result, 1219070632396864)
+	}
+}
+
+func TestRelativeBase3(t *testing.T) {
+	var program Program = []int{104, 1125899906842624, 99}
+
+	input := make(chan int)
+	output := make(chan int)
+	go program.IntCode(input, output, nil)
+	select {
+	case result := <-output:
+		assertProgram(t, program, 0, result, 1125899906842624)
 	}
 }

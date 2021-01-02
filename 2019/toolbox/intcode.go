@@ -14,12 +14,13 @@ type Replacement struct {
 const (
 	PositionMode  = iota
 	ImmediateMode = iota
+	RelativeMode  = iota
 )
 
 type Program []int
 
 func (p *Program) Copy() Program {
-	var program = make(Program, len(*p))
+	var program = make(Program, len(*p)*100)
 	copy(program, *p)
 	return program
 }
@@ -34,22 +35,21 @@ func (p *Program) Patch(replacements []Replacement) *Program {
 }
 
 type Parameter struct {
-	Value int
-	Mode  int
+	Value        int
+	Mode         int
+	RelativeBase int
 }
 
 type Instruction struct {
 	Opcode     int
 	Parameters []Parameter
-	Input      int
-	Output     int
 }
 
 func numParams(instruction int) int {
 	switch instruction {
 	case 1, 2, 7, 8:
 		return 3
-	case 3, 4:
+	case 3, 4, 9:
 		return 1
 	case 5, 6:
 		return 2
@@ -58,7 +58,7 @@ func numParams(instruction int) int {
 	}
 }
 
-func readNextInstruction(memory []int) (i Instruction) {
+func readNextInstruction(memory []int, relativeBase int) (i Instruction) {
 	instructionValue := fmt.Sprintf("%05d", memory[0])
 	i.Opcode, _ = strconv.Atoi(instructionValue[len(instructionValue)-2:])
 	i.Parameters = make([]Parameter, numParams(i.Opcode))
@@ -70,9 +70,28 @@ func readNextInstruction(memory []int) (i Instruction) {
 			Value: memory[j+1],
 			Mode:  paramMode,
 		}
+		if paramMode == RelativeMode {
+			i.Parameters[j].RelativeBase = relativeBase
+		}
 	}
 
 	return
+}
+
+func (p *Program) ReadValue(parameter Parameter) (value int) {
+	value = parameter.Value
+
+	if parameter.Mode != ImmediateMode {
+		value = (*p)[parameter.RelativeBase+value]
+	}
+
+	return
+}
+
+func (p *Program) WriteValue(parameter Parameter, value int) {
+	if parameter.Mode != ImmediateMode {
+		(*p)[parameter.Value+parameter.RelativeBase] = value
+	}
 }
 
 func (p *Program) IntCode(input <-chan int, output chan<- int, wg *sync.WaitGroup) Program {
@@ -82,8 +101,9 @@ func (p *Program) IntCode(input <-chan int, output chan<- int, wg *sync.WaitGrou
 	}
 
 	instructionPointer := 0
+	relativeBase := 0
 	for instructionPointer < len(program) {
-		instruction := readNextInstruction(program[instructionPointer:])
+		instruction := readNextInstruction(program[instructionPointer:], relativeBase)
 
 		if instruction.Opcode == 99 {
 			break
@@ -93,100 +113,62 @@ func (p *Program) IntCode(input <-chan int, output chan<- int, wg *sync.WaitGrou
 
 		switch instruction.Opcode {
 		case 1:
-			value1 := instruction.Parameters[0].Value
-			if instruction.Parameters[0].Mode == PositionMode {
-				value1 = program[value1]
-			}
-			value2 := instruction.Parameters[1].Value
-			if instruction.Parameters[1].Mode == PositionMode {
-				value2 = program[value2]
-			}
-			program[instruction.Parameters[2].Value] = value1 + value2
+			value1 := program.ReadValue(instruction.Parameters[0])
+			value2 := program.ReadValue(instruction.Parameters[1])
+			program.WriteValue(instruction.Parameters[2], value1+value2)
 			break
 		case 2:
-			value1 := instruction.Parameters[0].Value
-			if instruction.Parameters[0].Mode == PositionMode {
-				value1 = program[value1]
-			}
-			value2 := instruction.Parameters[1].Value
-			if instruction.Parameters[1].Mode == PositionMode {
-				value2 = program[value2]
-			}
-			program[instruction.Parameters[2].Value] = value1 * value2
+			value1 := program.ReadValue(instruction.Parameters[0])
+			value2 := program.ReadValue(instruction.Parameters[1])
+			program.WriteValue(instruction.Parameters[2], value1*value2)
 			break
 		case 3:
 			select {
 			case v := <-input:
-				program[instruction.Parameters[0].Value] = v
+				program.WriteValue(instruction.Parameters[0], v)
 			}
 			break
 		case 4:
-			value := instruction.Parameters[0].Value
-
-			if instruction.Parameters[0].Mode == PositionMode {
-				value = program[instruction.Parameters[0].Value]
-			}
-
-			output <- value
+			output <- program.ReadValue(instruction.Parameters[0])
 			break
 		case 5:
-			value := instruction.Parameters[0].Value
+			value := program.ReadValue(instruction.Parameters[0])
 
-			if instruction.Parameters[0].Mode == PositionMode {
-				value = program[instruction.Parameters[0].Value]
-			}
-
-			if value > 0 && instruction.Parameters[1].Mode == PositionMode {
-				instructionPointer = program[instruction.Parameters[1].Value]
-			} else if value > 0 {
-				instructionPointer = instruction.Parameters[1].Value
+			if value > 0 {
+				instructionPointer = program.ReadValue(instruction.Parameters[1])
 			}
 			break
 		case 6:
-			value := instruction.Parameters[0].Value
+			value := program.ReadValue(instruction.Parameters[0])
 
-			if instruction.Parameters[0].Mode == PositionMode {
-				value = program[instruction.Parameters[0].Value]
-			}
-
-			if value == 0 && instruction.Parameters[1].Mode == PositionMode {
-				instructionPointer = program[instruction.Parameters[1].Value]
-			} else if value == 0 {
-				instructionPointer = instruction.Parameters[1].Value
+			if value == 0 {
+				instructionPointer = program.ReadValue(instruction.Parameters[1])
 			}
 			break
 		case 7:
-			value1 := instruction.Parameters[0].Value
-			if instruction.Parameters[0].Mode == PositionMode {
-				value1 = program[value1]
-			}
-			value2 := instruction.Parameters[1].Value
-			if instruction.Parameters[1].Mode == PositionMode {
-				value2 = program[value2]
-			}
+			value1 := program.ReadValue(instruction.Parameters[0])
+			value2 := program.ReadValue(instruction.Parameters[1])
+
 			if value1 < value2 {
-				program[instruction.Parameters[2].Value] = 1
+				program.WriteValue(instruction.Parameters[2], 1)
 			} else {
-				program[instruction.Parameters[2].Value] = 0
+				program.WriteValue(instruction.Parameters[2], 0)
 			}
 			break
 		case 8:
-			value1 := instruction.Parameters[0].Value
-			if instruction.Parameters[0].Mode == PositionMode {
-				value1 = program[value1]
-			}
-			value2 := instruction.Parameters[1].Value
-			if instruction.Parameters[1].Mode == PositionMode {
-				value2 = program[value2]
-			}
+			value1 := program.ReadValue(instruction.Parameters[0])
+			value2 := program.ReadValue(instruction.Parameters[1])
+
 			if value1 == value2 {
-				program[instruction.Parameters[2].Value] = 1
+				program.WriteValue(instruction.Parameters[2], 1)
 			} else {
-				program[instruction.Parameters[2].Value] = 0
+				program.WriteValue(instruction.Parameters[2], 0)
 			}
 			break
+		case 9:
+			relativeBase += program.ReadValue(instruction.Parameters[0])
+			break
 		}
-
 	}
 
 	return program
