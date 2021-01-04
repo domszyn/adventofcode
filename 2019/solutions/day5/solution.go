@@ -25,8 +25,8 @@ func GetAnswers() (part1 int, part2 int) {
 	input <- 5
 	outputPart1 := make(chan int)
 	outputPart2 := make(chan int)
-	go program.IntCode(input, outputPart1, nil)
-	go program.IntCode(input, outputPart2, nil)
+	go program.IntCode(input, outputPart1, make(chan bool, 1))
+	go program.IntCode(input, outputPart2, make(chan bool, 1))
 
 	for v := range outputPart1 {
 		if v != 0 {
