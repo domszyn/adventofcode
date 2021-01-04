@@ -3,7 +3,6 @@ package toolbox
 import (
 	"fmt"
 	"strconv"
-	"sync"
 )
 
 type Replacement struct {
@@ -94,11 +93,8 @@ func (p *Program) WriteValue(parameter Parameter, value int) {
 	}
 }
 
-func (p *Program) IntCode(input <-chan int, output chan<- int, wg *sync.WaitGroup) Program {
+func (p *Program) IntCode(input <-chan int, output chan<- int, done chan<- bool) Program {
 	program := p.Copy()
-	if wg != nil {
-		defer wg.Done()
-	}
 
 	instructionPointer := 0
 	relativeBase := 0
@@ -171,5 +167,6 @@ func (p *Program) IntCode(input <-chan int, output chan<- int, wg *sync.WaitGrou
 		}
 	}
 
+	done <- true
 	return program
 }

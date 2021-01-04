@@ -3,7 +3,6 @@ package day9
 import (
 	"strconv"
 	"strings"
-	"sync"
 
 	"github.com/domszyn/adventofcode/2019/toolbox"
 )
@@ -22,11 +21,10 @@ func BOOST(i int) int {
 	program := readInput()
 	input := make(chan int)
 	output := make(chan int, 100)
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go program.IntCode(input, output, &wg)
+	done := make(chan bool, 1)
+	go program.IntCode(input, output, done)
 	input <- i
-	wg.Wait()
+	<-done
 
 	return <-output
 }

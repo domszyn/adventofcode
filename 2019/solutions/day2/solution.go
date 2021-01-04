@@ -24,10 +24,12 @@ func SolvePart1() int {
 		{Position: 1, Value: 12},
 		{Position: 2, Value: 2},
 	}
-	input := make(chan int)
-	output := make(chan int)
 
-	result := program.Patch(patches).IntCode(input, output, nil)
+	result := program.Patch(patches).IntCode(
+		make(chan int),
+		make(chan int),
+		make(chan bool, 1))
+
 	return result[0]
 }
 
@@ -41,9 +43,10 @@ func SolvePart2() int {
 				{Position: 2, Value: v},
 			}
 
-			input := make(chan int)
-			output := make(chan int)
-			result := program.Patch(patches).IntCode(input, output, nil)
+			result := program.Patch(patches).IntCode(
+				make(chan int),
+				make(chan int),
+				make(chan bool, 1))
 
 			if result[0] == 19690720 {
 				return 100*n + v

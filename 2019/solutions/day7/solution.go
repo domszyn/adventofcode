@@ -4,7 +4,6 @@ import (
 	"math"
 	"strconv"
 	"strings"
-	"sync"
 
 	"github.com/domszyn/adventofcode/2019/toolbox"
 )
@@ -50,7 +49,7 @@ func CalculateMaximumThrust(program toolbox.Program) int {
 			input := make(chan int)
 			output := make(chan int)
 
-			go program.IntCode(input, output, nil)
+			go program.IntCode(input, output, make(chan bool, 1))
 			input <- phaseSetting
 			input <- thrust
 
@@ -68,27 +67,30 @@ func CalculateMaximumThrust(program toolbox.Program) int {
 func CalculateThrustWithFeedbackLoop(program toolbox.Program) int {
 	permutations := getPermutations([]int{5, 6, 7, 8, 9})
 	maxThrust := math.MinInt32
-	var wg sync.WaitGroup
 
 	for _, phaseSettings := range permutations {
-		channels := make([]chan int, 5)
+		amplifiers := make([]chan int, 5)
+		done := make([]chan bool, 5)
 		thrust := 0
 
 		for i := 0; i < 5; i++ {
-			channels[i] = make(chan int, 10)
+			amplifiers[i] = make(chan int, 10)
+			done[i] = make(chan bool, 1)
 		}
 
 		for i := 0; i < 5; i++ {
-			wg.Add(1)
-			channels[i] <- phaseSettings[i]
+			amplifiers[i] <- phaseSettings[i]
 			if i == 0 {
-				channels[0] <- 0
+				amplifiers[0] <- 0
 			}
-			go program.IntCode(channels[i], channels[(i+1)%5], &wg)
+			go program.IntCode(amplifiers[i], amplifiers[(i+1)%5], done[i])
 		}
 
-		wg.Wait()
-		for v := range channels[0] {
+		for i := 0; i < 5; i++ {
+			<-done[i]
+		}
+
+		for v := range amplifiers[0] {
 			if v != 0 {
 				thrust = v
 				break

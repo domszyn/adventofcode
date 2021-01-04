@@ -1,7 +1,6 @@
 package toolbox
 
 import (
-	"sync"
 	"testing"
 )
 
@@ -15,8 +14,9 @@ func TestEqualTo8UsingPositionMode(t *testing.T) {
 	var program Program = []int{3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8}
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 2)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
 	input <- 8
 	select {
 	case result := <-output:
@@ -34,8 +34,9 @@ func TestLessThan8UsingPositionMode(t *testing.T) {
 	var program Program = []int{3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8}
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 2)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
 	input <- 8
 	select {
 	case result := <-output:
@@ -53,8 +54,9 @@ func TestEqualTo8UsingImmediateMode(t *testing.T) {
 	var program Program = []int{3, 3, 1108, -1, 8, 3, 4, 3, 99}
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 2)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
 	input <- 8
 	select {
 	case result := <-output:
@@ -72,8 +74,9 @@ func TestLessThan8UsingImmediateMode(t *testing.T) {
 	var program Program = []int{3, 3, 1107, -1, 8, 3, 4, 3, 99}
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 2)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
 	input <- 8
 	select {
 	case result := <-output:
@@ -91,8 +94,9 @@ func TestJumpUsingPositionMode(t *testing.T) {
 	var program Program = []int{3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9}
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 2)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
 	input <- 8
 	select {
 	case result := <-output:
@@ -110,8 +114,9 @@ func TestJumpUsingImmediateMode(t *testing.T) {
 	var program Program = []int{3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1}
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 2)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
 	input <- 8
 	select {
 	case result := <-output:
@@ -132,9 +137,10 @@ func TestCombined(t *testing.T) {
 
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 3)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
+	go program.IntCode(input, output, done)
 	input <- 7
 	select {
 	case result := <-output:
@@ -159,10 +165,9 @@ func TestRelativeBase1(t *testing.T) {
 
 	input := make(chan int)
 	output := make(chan int, 16)
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go program.IntCode(input, output, &wg)
-	wg.Wait()
+	done := make(chan bool, 1)
+	go program.IntCode(input, output, done)
+	<-done
 	close(output)
 
 	var result []int
@@ -187,7 +192,8 @@ func TestRelativeBase2(t *testing.T) {
 
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 1)
+	go program.IntCode(input, output, done)
 	select {
 	case result := <-output:
 		assertProgram(t, program, 0, result, 1219070632396864)
@@ -199,7 +205,8 @@ func TestRelativeBase3(t *testing.T) {
 
 	input := make(chan int)
 	output := make(chan int)
-	go program.IntCode(input, output, nil)
+	done := make(chan bool, 1)
+	go program.IntCode(input, output, done)
 	select {
 	case result := <-output:
 		assertProgram(t, program, 0, result, 1125899906842624)
