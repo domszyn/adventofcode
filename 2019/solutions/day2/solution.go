@@ -1,24 +1,11 @@
 package day2
 
 import (
-	"strconv"
-	"strings"
-
 	"github.com/domszyn/adventofcode/2019/toolbox"
 )
 
-func readInput() toolbox.Program {
-	var ints []int
-	for _, s := range strings.Split(Input, ",") {
-		number, _ := strconv.Atoi(s)
-		ints = append(ints, number)
-	}
-
-	return ints
-}
-
 func SolvePart1() int {
-	program := readInput()
+	program := toolbox.LoadProgram(Input)
 
 	patches := []toolbox.Replacement{
 		{Position: 1, Value: 12},
@@ -34,7 +21,7 @@ func SolvePart1() int {
 }
 
 func SolvePart2() int {
-	program := readInput()
+	program := toolbox.LoadProgram(Input)
 
 	for n := 0; n < 100; n++ {
 		for v := 0; v < 100; v++ {

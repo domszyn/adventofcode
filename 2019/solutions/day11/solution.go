@@ -1,12 +1,6 @@
 package day11
 
-import (
-	"fmt"
-	"strconv"
-	"strings"
-
-	"github.com/domszyn/adventofcode/2019/toolbox"
-)
+import "github.com/domszyn/adventofcode/2019/toolbox"
 
 type HullPaintingRobot struct {
 	Direction Direction
@@ -14,18 +8,8 @@ type HullPaintingRobot struct {
 	Hull      map[Position]int
 }
 
-func loadProgram() toolbox.Program {
-	var ints []int
-	for _, s := range strings.Split(Input, ",") {
-		number, _ := strconv.Atoi(s)
-		ints = append(ints, number)
-	}
-
-	return ints
-}
-
 func paintHull(startingColor int) map[Position]int {
-	paintProgram := loadProgram()
+	paintProgram := toolbox.LoadProgram(Input)
 	robot := HullPaintingRobot{
 		Direction: 0,
 		Position:  Position{X: 0, Y: 0},
@@ -47,9 +31,7 @@ func paintHull(startingColor int) map[Position]int {
 
 		select {
 		case paintComplete = <-done:
-			break
 		case input <- color:
-			break
 		}
 
 		if paintComplete {
@@ -59,7 +41,6 @@ func paintHull(startingColor int) map[Position]int {
 		select {
 		case color := <-output:
 			robot.Hull[robot.Position] = color
-			break
 		}
 
 		select {
@@ -74,16 +55,12 @@ func paintHull(startingColor int) map[Position]int {
 		switch robot.Direction {
 		case 0:
 			robot.Position = robot.Position.Up()
-			break
 		case 90:
 			robot.Position = robot.Position.Right()
-			break
 		case 180:
 			robot.Position = robot.Position.Down()
-			break
 		case 270:
 			robot.Position = robot.Position.Left()
-			break
 		}
 	}
 
@@ -114,6 +91,5 @@ func GetAnswers() (answer1 int, identifier string) {
 		}
 		identifier += "\n"
 	}
-	fmt.Println(identifier)
 	return
 }

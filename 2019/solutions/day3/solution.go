@@ -29,16 +29,12 @@ func getLinePoints(line string) []Point {
 		switch direction {
 		case "L":
 			points = append(points, Point{X: prevPoint.X - length, Y: prevPoint.Y})
-			break
 		case "R":
 			points = append(points, Point{X: prevPoint.X + length, Y: prevPoint.Y})
-			break
 		case "U":
 			points = append(points, Point{X: prevPoint.X, Y: prevPoint.Y + length})
-			break
 		case "D":
 			points = append(points, Point{X: prevPoint.X, Y: prevPoint.Y - length})
-			break
 		}
 	}
 

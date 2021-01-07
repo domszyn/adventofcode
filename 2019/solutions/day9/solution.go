@@ -1,24 +1,11 @@
 package day9
 
 import (
-	"strconv"
-	"strings"
-
 	"github.com/domszyn/adventofcode/2019/toolbox"
 )
 
-func readInput() toolbox.Program {
-	var ints []int
-	for _, s := range strings.Split(Input, ",") {
-		number, _ := strconv.Atoi(s)
-		ints = append(ints, number)
-	}
-
-	return ints
-}
-
 func BOOST(i int) int {
-	program := readInput()
+	program := toolbox.LoadProgram(Input)
 	input := make(chan int)
 	output := make(chan int, 100)
 	done := make(chan bool, 1)
