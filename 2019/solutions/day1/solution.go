@@ -23,7 +23,7 @@ func calcAdditionalFuel(mass int64) int64 {
 func FuelRequirement(accountForFuelMass bool) int64 {
 	scanner := bufio.NewScanner(strings.NewReader(Input))
 	scanner.Split(bufio.ScanLines)
-	var totalFuel int64 = 0
+	var totalFuel int64
 
 	for scanner.Scan() {
 		mass, _ := strconv.ParseInt(scanner.Text(), 10, 64)

@@ -20,7 +20,6 @@ func getPermutations(numbers []int) (permutations [][]int) {
 		} else {
 			permutations = append(permutations, permutation)
 		}
-
 	}
 
 	return

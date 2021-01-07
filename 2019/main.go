@@ -55,6 +55,5 @@ func main() {
 		default:
 			fmt.Println("Type a number between 1 and 25 to get the answer and quit to exit")
 		}
-
 	}
 }

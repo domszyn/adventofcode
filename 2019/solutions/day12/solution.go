@@ -30,7 +30,7 @@ func findSteps(positions []int64) int64 {
 	velocities := make([]int64, len(positions))
 	endVelocities := make([]int64, len(positions))
 
-	var steps int64 = 0
+	var steps int64
 
 	for {
 		velocityChange := velocityDiff(positions)
