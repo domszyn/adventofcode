@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/domszyn/adventofcode/2019/solutions"
+	"github.com/domszyn/adventofcode/2019/solutions/day13"
 )
 
 func main() {
@@ -21,46 +22,38 @@ func main() {
 		switch text {
 		case "1":
 			solution.SolveDay1()
-			break
 		case "2":
 			solution.SolveDay2()
-			break
 		case "3":
 			solution.SolveDay3()
-			break
 		case "4":
 			solution.SolveDay4()
-			break
 		case "5":
 			solution.SolveDay5()
-			break
 		case "6":
 			solution.SolveDay6()
-			break
 		case "7":
 			solution.SolveDay7()
-			break
 		case "8":
 			solution.SolveDay8()
-			break
 		case "9":
 			solution.SolveDay9()
-			break
 		case "11":
 			solution.SolveDay11()
-			break
 		case "12":
 			solution.SolveDay12()
-			break
-		case "10", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25":
+		case "13":
+			solution.SolveDay13()
+		case "13 animate":
+			day13.SolvePart2(true, false)
+		case "13 fastwin":
+			day13.SolvePart2(true, true)
+		case "10", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25":
 			fmt.Println("Solution is not ready yet")
-			break
 		case "quit":
 			os.Exit(0)
-			break
 		default:
 			fmt.Println("Type a number between 1 and 25 to get the answer and quit to exit")
-			break
 		}
 
 	}

@@ -3,6 +3,7 @@ package toolbox
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 type Replacement struct {
@@ -17,6 +18,16 @@ const (
 )
 
 type Program []int
+
+func LoadProgram(input string) *Program {
+	var ints Program
+	for _, s := range strings.Split(input, ",") {
+		number, _ := strconv.Atoi(s)
+		ints = append(ints, number)
+	}
+
+	return &ints
+}
 
 func (p *Program) Copy() Program {
 	var program = make(Program, len(*p)*100)
@@ -112,35 +123,29 @@ func (p *Program) IntCode(input <-chan int, output chan<- int, done chan<- bool)
 			value1 := program.ReadValue(instruction.Parameters[0])
 			value2 := program.ReadValue(instruction.Parameters[1])
 			program.WriteValue(instruction.Parameters[2], value1+value2)
-			break
 		case 2:
 			value1 := program.ReadValue(instruction.Parameters[0])
 			value2 := program.ReadValue(instruction.Parameters[1])
 			program.WriteValue(instruction.Parameters[2], value1*value2)
-			break
 		case 3:
 			select {
 			case v := <-input:
 				program.WriteValue(instruction.Parameters[0], v)
 			}
-			break
 		case 4:
 			output <- program.ReadValue(instruction.Parameters[0])
-			break
 		case 5:
 			value := program.ReadValue(instruction.Parameters[0])
 
 			if value > 0 {
 				instructionPointer = program.ReadValue(instruction.Parameters[1])
 			}
-			break
 		case 6:
 			value := program.ReadValue(instruction.Parameters[0])
 
 			if value == 0 {
 				instructionPointer = program.ReadValue(instruction.Parameters[1])
 			}
-			break
 		case 7:
 			value1 := program.ReadValue(instruction.Parameters[0])
 			value2 := program.ReadValue(instruction.Parameters[1])
@@ -150,7 +155,6 @@ func (p *Program) IntCode(input <-chan int, output chan<- int, done chan<- bool)
 			} else {
 				program.WriteValue(instruction.Parameters[2], 0)
 			}
-			break
 		case 8:
 			value1 := program.ReadValue(instruction.Parameters[0])
 			value2 := program.ReadValue(instruction.Parameters[1])
@@ -160,10 +164,8 @@ func (p *Program) IntCode(input <-chan int, output chan<- int, done chan<- bool)
 			} else {
 				program.WriteValue(instruction.Parameters[2], 0)
 			}
-			break
 		case 9:
 			relativeBase += program.ReadValue(instruction.Parameters[0])
-			break
 		}
 	}
 

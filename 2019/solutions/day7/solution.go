@@ -2,21 +2,9 @@ package day7
 
 import (
 	"math"
-	"strconv"
-	"strings"
 
 	"github.com/domszyn/adventofcode/2019/toolbox"
 )
-
-func readInput() []int {
-	var ints []int
-	for _, s := range strings.Split(Input, ",") {
-		number, _ := strconv.Atoi(s)
-		ints = append(ints, number)
-	}
-
-	return ints
-}
 
 func getPermutations(numbers []int) (permutations [][]int) {
 	for i := 0; i < len(numbers); i++ {
@@ -106,5 +94,6 @@ func CalculateThrustWithFeedbackLoop(program toolbox.Program) int {
 }
 
 func GetAnswers() (int, int) {
-	return CalculateMaximumThrust(readInput()), CalculateThrustWithFeedbackLoop(readInput())
+	program := toolbox.LoadProgram(Input)
+	return CalculateMaximumThrust(*program), CalculateThrustWithFeedbackLoop(*program)
 }
