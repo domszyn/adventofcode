@@ -61,9 +61,9 @@ func getIntersection(a, b Segment) Point {
 			X: int(math.Round(float64(a.Start.X) + s*a1)),
 			Y: int(math.Round(float64(a.Start.Y) + s*a2)),
 		}
-	} else {
-		return Point{}
 	}
+
+	return Point{}
 }
 
 func findIntersections(lineA, lineB []Point) []Point {

@@ -43,7 +43,7 @@ func hasDoubleDigits(password string, skipLargerGroups bool) bool {
 func validPassword(password int, skipLargerGroups bool) bool {
 	pString := fmt.Sprintf("%d", password)
 
-	var maxDigit byte = 0
+	var maxDigit byte
 	for i := 0; i < 6; i++ {
 		currentDigit := pString[i]
 		if currentDigit < maxDigit {
