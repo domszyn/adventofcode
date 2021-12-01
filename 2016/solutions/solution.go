@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/domszyn/adventofcode/2016/solutions/day1"
+	"github.com/domszyn/adventofcode/2016/solutions/day10"
 	"github.com/domszyn/adventofcode/2016/solutions/day2"
 	"github.com/domszyn/adventofcode/2016/solutions/day3"
 	"github.com/domszyn/adventofcode/2016/solutions/day4"
@@ -87,6 +88,13 @@ func (s *Solution) SolveDay8() {
 func (s *Solution) SolveDay9() {
 	start := time.Now()
 	s.Part1, s.Part2 = day9.Solve(), day9.Solve2()
+	s.ExecTime = time.Since(start)
+	s.Print()
+}
+
+func (s *Solution) SolveDay10() {
+	start := time.Now()
+	s.Part1, s.Part2 = day10.Solve()
 	s.ExecTime = time.Since(start)
 	s.Print()
 }
