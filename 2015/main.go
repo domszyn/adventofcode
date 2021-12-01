@@ -33,6 +33,8 @@ func main() {
 			solution.SolveDay6()
 		case "7":
 			solution.SolveDay7()
+		case "8":
+			solution.SolveDay8()
 		case "quit":
 			os.Exit(0)
 		default:
