@@ -23,6 +23,8 @@ func main() {
 			solution.SolveDay1()
 		case "2":
 			solution.SolveDay2()
+		case "3":
+			solution.SolveDay3()
 		case "quit":
 			os.Exit(0)
 		default:
