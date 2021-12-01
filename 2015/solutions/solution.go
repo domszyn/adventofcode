@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/domszyn/adventofcode/2015/solutions/day1"
+	"github.com/domszyn/adventofcode/2015/solutions/day2"
 )
 
 type Solution struct {
@@ -22,6 +23,13 @@ func (s *Solution) SolveDay1() {
 	start := time.Now()
 	s.Part1 = day1.CalculateFloor()
 	s.Part2 = day1.CalculateBasementPosition()
+	s.ExecTime = time.Since(start)
+	s.Print()
+}
+
+func (s *Solution) SolveDay2() {
+	start := time.Now()
+	s.Part1, s.Part2 = day2.CalculatePaperAndRibbon()
 	s.ExecTime = time.Since(start)
 	s.Print()
 }
