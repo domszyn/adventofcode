@@ -6,6 +6,7 @@ import (
 
 	"github.com/domszyn/adventofcode/2015/solutions/day1"
 	"github.com/domszyn/adventofcode/2015/solutions/day10"
+	"github.com/domszyn/adventofcode/2015/solutions/day11"
 	"github.com/domszyn/adventofcode/2015/solutions/day2"
 	"github.com/domszyn/adventofcode/2015/solutions/day3"
 	"github.com/domszyn/adventofcode/2015/solutions/day4"
@@ -98,6 +99,16 @@ func (s *Solution) SolveDay9() {
 func (s *Solution) SolveDay10() {
 	start := time.Now()
 	s.Part1, s.Part2 = day10.Solve()
+	s.ExecTime = time.Since(start)
+	s.Print()
+}
+
+func (s *Solution) SolveDay11() {
+	start := time.Now()
+	pwd1 := day11.GetNewPassword("cqjxjnds")
+	pwd2 := day11.GetNewPassword(pwd1)
+	s.Part1 = pwd1
+	s.Part2 = pwd2
 	s.ExecTime = time.Since(start)
 	s.Print()
 }
