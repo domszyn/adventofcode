@@ -1,0 +1,710 @@
+47
+1: ["polonium gen", "promethium gen"] -> 2
+4: []
+3: []
+2: ["polonium chip", "promethium chip", "polonium gen", "promethium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+2: ["polonium chip", "polonium gen"] -> 3
+4: []
+3: ["polonium chip", "polonium gen"]
+2: ["promethium chip", "promethium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+3: ["polonium chip", "polonium gen"] -> 4
+4: ["polonium chip", "polonium gen"]
+3: []
+2: ["promethium chip", "promethium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+4: ["polonium gen"] -> 3
+4: ["polonium chip"]
+3: ["polonium gen"]
+2: ["promethium chip", "promethium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+5: ["polonium gen"] -> 2
+4: ["polonium chip"]
+3: []
+2: ["promethium chip", "promethium gen", "polonium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+6: ["promethium chip", "promethium gen"] -> 3
+4: ["polonium chip"]
+3: ["promethium chip", "promethium gen"]
+2: ["polonium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+7: ["promethium gen"] -> 2
+4: ["polonium chip"]
+3: ["promethium chip"]
+2: ["polonium gen", "promethium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+8: ["polonium gen", "promethium gen"] -> 3
+4: ["polonium chip"]
+3: ["promethium chip", "polonium gen", "promethium gen"]
+2: []
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+9: ["polonium gen", "promethium gen"] -> 4
+4: ["polonium chip", "polonium gen", "promethium gen"]
+3: ["promethium chip"]
+2: []
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+10: ["promethium gen"] -> 3
+4: ["polonium chip", "polonium gen"]
+3: ["promethium chip", "promethium gen"]
+2: []
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+11: ["promethium gen"] -> 2
+4: ["polonium chip", "polonium gen"]
+3: ["promethium chip"]
+2: ["promethium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip"]
+
+12: ["promethium gen"] -> 1
+4: ["polonium chip", "polonium gen"]
+3: ["promethium chip"]
+2: []
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "ruthenium chip", "cobalt chip", "promethium gen"]
+
+13: ["thulium chip", "thulium gen"] -> 2
+4: ["polonium chip", "polonium gen"]
+3: ["promethium chip"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip", "promethium gen"]
+
+14: ["thulium gen"] -> 1
+4: ["polonium chip", "polonium gen"]
+3: ["promethium chip"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip", "promethium gen", "thulium gen"]
+
+15: ["promethium gen", "thulium gen"] -> 2
+4: ["polonium chip", "polonium gen"]
+3: ["promethium chip"]
+2: ["thulium chip", "promethium gen", "thulium gen"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+16: ["promethium gen", "thulium gen"] -> 3
+4: ["polonium chip", "polonium gen"]
+3: ["promethium chip", "promethium gen", "thulium gen"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+17: ["promethium gen", "thulium gen"] -> 4
+4: ["polonium chip", "polonium gen", "promethium gen", "thulium gen"]
+3: ["promethium chip"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+18: ["promethium gen"] -> 3
+4: ["polonium chip", "polonium gen", "thulium gen"]
+3: ["promethium chip", "promethium gen"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+19: ["promethium chip", "promethium gen"] -> 4
+4: ["polonium chip", "polonium gen", "thulium gen", "promethium chip", "promethium gen"]
+3: []
+2: ["thulium chip"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+20: ["thulium gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium gen"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+21: ["thulium gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: []
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+22: ["thulium chip", "thulium gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium chip", "thulium gen"]
+2: []
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+23: ["thulium gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium chip"]
+2: ["thulium gen"]
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip"]
+
+24: ["thulium gen"] -> 1
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium chip"]
+2: []
+1: ["ruthenium gen", "cobalt gen", "ruthenium chip", "cobalt chip", "thulium gen"]
+
+25: ["ruthenium chip", "ruthenium gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium chip"]
+2: ["ruthenium chip", "ruthenium gen"]
+1: ["cobalt gen", "cobalt chip", "thulium gen"]
+
+26: ["ruthenium gen"] -> 1
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium chip"]
+2: ["ruthenium chip"]
+1: ["cobalt gen", "cobalt chip", "thulium gen", "ruthenium gen"]
+
+27: ["thulium gen", "ruthenium gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium chip"]
+2: ["ruthenium chip", "thulium gen", "ruthenium gen"]
+1: ["cobalt gen", "cobalt chip"]
+
+28: ["thulium gen", "ruthenium gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen"]
+3: ["thulium chip", "thulium gen", "ruthenium gen"]
+2: ["ruthenium chip"]
+1: ["cobalt gen", "cobalt chip"]
+
+29: ["thulium gen", "ruthenium gen"] -> 4
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium gen", "ruthenium gen"]
+3: ["thulium chip"]
+2: ["ruthenium chip"]
+1: ["cobalt gen", "cobalt chip"]
+
+30: ["thulium gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "ruthenium gen"]
+3: ["thulium chip", "thulium gen"]
+2: ["ruthenium chip"]
+1: ["cobalt gen", "cobalt chip"]
+
+31: ["thulium chip", "thulium gen"] -> 4
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "ruthenium gen", "thulium chip", "thulium gen"]
+3: []
+2: ["ruthenium chip"]
+1: ["cobalt gen", "cobalt chip"]
+
+32: ["ruthenium gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium gen"]
+2: ["ruthenium chip"]
+1: ["cobalt gen", "cobalt chip"]
+
+33: ["ruthenium gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: []
+2: ["ruthenium chip", "ruthenium gen"]
+1: ["cobalt gen", "cobalt chip"]
+
+34: ["ruthenium chip", "ruthenium gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium chip", "ruthenium gen"]
+2: []
+1: ["cobalt gen", "cobalt chip"]
+
+35: ["ruthenium gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium chip"]
+2: ["ruthenium gen"]
+1: ["cobalt gen", "cobalt chip"]
+
+36: ["ruthenium gen"] -> 1
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium chip"]
+2: []
+1: ["cobalt gen", "cobalt chip", "ruthenium gen"]
+
+37: ["cobalt chip", "cobalt gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium chip"]
+2: ["cobalt chip", "cobalt gen"]
+1: ["ruthenium gen"]
+
+38: ["cobalt gen"] -> 1
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium chip"]
+2: ["cobalt chip"]
+1: ["ruthenium gen", "cobalt gen"]
+
+39: ["ruthenium gen", "cobalt gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium chip"]
+2: ["cobalt chip", "ruthenium gen", "cobalt gen"]
+1: []
+
+40: ["ruthenium gen", "cobalt gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen"]
+3: ["ruthenium chip", "ruthenium gen", "cobalt gen"]
+2: ["cobalt chip"]
+1: []
+
+41: ["ruthenium gen", "cobalt gen"] -> 4
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium chip", "thulium gen", "ruthenium gen", "cobalt gen"]
+3: ["ruthenium chip"]
+2: ["cobalt chip"]
+1: []
+
+42: ["thulium chip"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium gen", "ruthenium gen", "cobalt gen"]
+3: ["ruthenium chip", "thulium chip"]
+2: ["cobalt chip"]
+1: []
+
+43: ["ruthenium chip", "thulium chip"] -> 4
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium gen", "ruthenium gen", "cobalt gen", "ruthenium chip", "thulium chip"]
+3: []
+2: ["cobalt chip"]
+1: []
+
+44: ["cobalt gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium gen", "ruthenium gen", "ruthenium chip", "thulium chip"]
+3: ["cobalt gen"]
+2: ["cobalt chip"]
+1: []
+
+45: ["cobalt gen"] -> 2
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium gen", "ruthenium gen", "ruthenium chip", "thulium chip"]
+3: []
+2: ["cobalt chip", "cobalt gen"]
+1: []
+
+46: ["cobalt chip", "cobalt gen"] -> 3
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium gen", "ruthenium gen", "ruthenium chip", "thulium chip"]
+3: ["cobalt chip", "cobalt gen"]
+2: []
+1: []
+
+47: ["cobalt chip", "cobalt gen"] -> 4
+4: ["polonium chip", "polonium gen", "promethium chip", "promethium gen", "thulium gen", "ruthenium gen", "ruthenium chip", "thulium chip", "cobalt chip", "cobalt gen"]
+3: []
+2: []
+1: []
+
+71
+1: ["ruthenium chip", "cobalt chip"] -> 2
+4: []
+3: []
+2: ["polonium chip", "promethium chip", "ruthenium chip", "cobalt chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen"]
+
+2: ["promethium chip", "ruthenium chip"] -> 3
+4: []
+3: ["promethium chip", "ruthenium chip"]
+2: ["polonium chip", "cobalt chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen"]
+
+3: ["promethium chip", "ruthenium chip"] -> 4
+4: ["promethium chip", "ruthenium chip"]
+3: []
+2: ["polonium chip", "cobalt chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen"]
+
+4: ["ruthenium chip"] -> 3
+4: ["promethium chip"]
+3: ["ruthenium chip"]
+2: ["polonium chip", "cobalt chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen"]
+
+5: ["ruthenium chip"] -> 2
+4: ["promethium chip"]
+3: []
+2: ["polonium chip", "cobalt chip", "ruthenium chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen"]
+
+6: ["cobalt chip", "ruthenium chip"] -> 3
+4: ["promethium chip"]
+3: ["cobalt chip", "ruthenium chip"]
+2: ["polonium chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen"]
+
+7: ["ruthenium chip"] -> 2
+4: ["promethium chip"]
+3: ["cobalt chip"]
+2: ["polonium chip", "ruthenium chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen"]
+
+8: ["ruthenium chip"] -> 1
+4: ["promethium chip"]
+3: ["cobalt chip"]
+2: ["polonium chip"]
+1: ["polonium gen", "thulium gen", "promethium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+9: ["promethium gen", "polonium gen"] -> 2
+4: ["promethium chip"]
+3: ["cobalt chip"]
+2: ["polonium chip", "promethium gen", "polonium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+10: ["promethium gen"] -> 1
+4: ["promethium chip"]
+3: ["cobalt chip"]
+2: ["polonium chip", "polonium gen"]
+1: ["thulium gen", "ruthenium gen", "cobalt gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip", "promethium gen"]
+
+11: ["cobalt gen", "promethium gen"] -> 2
+4: ["promethium chip"]
+3: ["cobalt chip"]
+2: ["polonium chip", "polonium gen", "cobalt gen", "promethium gen"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+12: ["promethium gen", "cobalt gen"] -> 3
+4: ["promethium chip"]
+3: ["cobalt chip", "promethium gen", "cobalt gen"]
+2: ["polonium chip", "polonium gen"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+13: ["promethium gen", "cobalt gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen"]
+3: ["cobalt chip"]
+2: ["polonium chip", "polonium gen"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+14: ["cobalt gen"] -> 3
+4: ["promethium chip", "promethium gen"]
+3: ["cobalt chip", "cobalt gen"]
+2: ["polonium chip", "polonium gen"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+15: ["cobalt gen"] -> 2
+4: ["promethium chip", "promethium gen"]
+3: ["cobalt chip"]
+2: ["polonium chip", "polonium gen", "cobalt gen"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+16: ["polonium gen", "cobalt gen"] -> 3
+4: ["promethium chip", "promethium gen"]
+3: ["cobalt chip", "polonium gen", "cobalt gen"]
+2: ["polonium chip"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+17: ["polonium gen", "cobalt gen"] -> 4
+4: ["promethium chip", "promethium gen", "polonium gen", "cobalt gen"]
+3: ["cobalt chip"]
+2: ["polonium chip"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+18: ["cobalt gen"] -> 3
+4: ["promethium chip", "promethium gen", "polonium gen"]
+3: ["cobalt chip", "cobalt gen"]
+2: ["polonium chip"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+19: ["cobalt chip", "cobalt gen"] -> 4
+4: ["promethium chip", "promethium gen", "polonium gen", "cobalt chip", "cobalt gen"]
+3: []
+2: ["polonium chip"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+20: ["polonium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium gen"]
+2: ["polonium chip"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+21: ["polonium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: []
+2: ["polonium chip", "polonium gen"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+22: ["polonium chip", "polonium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "polonium gen"]
+2: []
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+23: ["polonium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip"]
+2: ["polonium gen"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+24: ["polonium gen"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip"]
+2: []
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium chip", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip", "polonium gen"]
+
+25: ["elerium chip", "ruthenium chip"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip"]
+2: ["elerium chip", "ruthenium chip"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium gen", "dilithium chip", "dilithium gen", "polonium gen"]
+
+26: ["elerium chip", "ruthenium chip"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip", "ruthenium chip"]
+2: []
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium gen", "dilithium chip", "dilithium gen", "polonium gen"]
+
+27: ["ruthenium chip"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip"]
+2: ["ruthenium chip"]
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium gen", "dilithium chip", "dilithium gen", "polonium gen"]
+
+28: ["ruthenium chip"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip"]
+2: []
+1: ["thulium gen", "ruthenium gen", "thulium chip", "elerium gen", "dilithium chip", "dilithium gen", "polonium gen", "ruthenium chip"]
+
+29: ["thulium chip", "thulium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "elerium gen", "dilithium chip", "dilithium gen", "polonium gen", "ruthenium chip"]
+
+30: ["thulium gen"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "elerium gen", "dilithium chip", "dilithium gen", "polonium gen", "ruthenium chip", "thulium gen"]
+
+31: ["polonium gen", "thulium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip"]
+2: ["thulium chip", "polonium gen", "thulium gen"]
+1: ["ruthenium gen", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+32: ["polonium gen"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "elerium gen", "dilithium chip", "dilithium gen", "ruthenium chip", "polonium gen"]
+
+33: ["elerium gen", "polonium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip"]
+2: ["thulium chip", "thulium gen", "elerium gen", "polonium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+34: ["polonium gen", "elerium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen"]
+3: ["polonium chip", "elerium chip", "polonium gen", "elerium gen"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+35: ["polonium gen", "elerium gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt chip", "cobalt gen", "polonium gen", "elerium gen"]
+3: ["polonium chip", "elerium chip"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+36: ["cobalt chip"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "polonium gen", "elerium gen"]
+3: ["polonium chip", "elerium chip", "cobalt chip"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+37: ["elerium chip", "cobalt chip"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "polonium gen", "elerium gen", "elerium chip", "cobalt chip"]
+3: ["polonium chip"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+38: ["polonium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "cobalt chip"]
+3: ["polonium chip", "polonium gen"]
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+39: ["polonium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "cobalt chip"]
+3: ["polonium chip"]
+2: ["thulium chip", "thulium gen", "polonium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+40: ["thulium gen", "polonium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "cobalt chip"]
+3: ["polonium chip", "thulium gen", "polonium gen"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+41: ["thulium gen", "polonium gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "cobalt chip", "thulium gen", "polonium gen"]
+3: ["polonium chip"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+42: ["cobalt chip"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "thulium gen", "polonium gen"]
+3: ["polonium chip", "cobalt chip"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+43: ["polonium chip", "cobalt chip"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "thulium gen", "polonium gen", "polonium chip", "cobalt chip"]
+3: []
+2: ["thulium chip"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+44: ["thulium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium gen"]
+2: ["thulium chip"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+45: ["thulium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: []
+2: ["thulium chip", "thulium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+46: ["thulium chip", "thulium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium chip", "thulium gen"]
+2: []
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+47: ["thulium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium chip"]
+2: ["thulium gen"]
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip"]
+
+48: ["thulium gen"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium chip"]
+2: []
+1: ["ruthenium gen", "dilithium chip", "dilithium gen", "ruthenium chip", "thulium gen"]
+
+49: ["dilithium chip", "dilithium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium chip"]
+2: ["dilithium chip", "dilithium gen"]
+1: ["ruthenium gen", "ruthenium chip", "thulium gen"]
+
+50: ["dilithium gen"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium chip"]
+2: ["dilithium chip"]
+1: ["ruthenium gen", "ruthenium chip", "thulium gen", "dilithium gen"]
+
+51: ["thulium gen", "dilithium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium chip"]
+2: ["dilithium chip", "thulium gen", "dilithium gen"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+52: ["thulium gen", "dilithium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip"]
+3: ["thulium chip", "thulium gen", "dilithium gen"]
+2: ["dilithium chip"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+53: ["thulium gen", "dilithium gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium gen", "dilithium gen"]
+3: ["thulium chip"]
+2: ["dilithium chip"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+54: ["thulium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "dilithium gen"]
+3: ["thulium chip", "thulium gen"]
+2: ["dilithium chip"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+55: ["thulium chip", "thulium gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "dilithium gen", "thulium chip", "thulium gen"]
+3: []
+2: ["dilithium chip"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+56: ["dilithium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium gen"]
+2: ["dilithium chip"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+57: ["dilithium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: []
+2: ["dilithium chip", "dilithium gen"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+58: ["dilithium chip", "dilithium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium chip", "dilithium gen"]
+2: []
+1: ["ruthenium gen", "ruthenium chip"]
+
+59: ["dilithium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium chip"]
+2: ["dilithium gen"]
+1: ["ruthenium gen", "ruthenium chip"]
+
+60: ["dilithium gen"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium chip"]
+2: []
+1: ["ruthenium gen", "ruthenium chip", "dilithium gen"]
+
+61: ["ruthenium chip", "ruthenium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium chip"]
+2: ["ruthenium chip", "ruthenium gen"]
+1: ["dilithium gen"]
+
+62: ["ruthenium gen"] -> 1
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium chip"]
+2: ["ruthenium chip"]
+1: ["dilithium gen", "ruthenium gen"]
+
+63: ["dilithium gen", "ruthenium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium chip"]
+2: ["ruthenium chip", "dilithium gen", "ruthenium gen"]
+1: []
+
+64: ["dilithium gen", "ruthenium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen"]
+3: ["dilithium chip", "dilithium gen", "ruthenium gen"]
+2: ["ruthenium chip"]
+1: []
+
+65: ["dilithium gen", "ruthenium gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen", "dilithium gen", "ruthenium gen"]
+3: ["dilithium chip"]
+2: ["ruthenium chip"]
+1: []
+
+66: ["dilithium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen", "ruthenium gen"]
+3: ["dilithium chip", "dilithium gen"]
+2: ["ruthenium chip"]
+1: []
+
+67: ["dilithium chip", "dilithium gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen", "ruthenium gen", "dilithium chip", "dilithium gen"]
+3: []
+2: ["ruthenium chip"]
+1: []
+
+68: ["ruthenium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen", "dilithium chip", "dilithium gen"]
+3: ["ruthenium gen"]
+2: ["ruthenium chip"]
+1: []
+
+69: ["ruthenium gen"] -> 2
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen", "dilithium chip", "dilithium gen"]
+3: []
+2: ["ruthenium chip", "ruthenium gen"]
+1: []
+
+70: ["ruthenium chip", "ruthenium gen"] -> 3
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen", "dilithium chip", "dilithium gen"]
+3: ["ruthenium chip", "ruthenium gen"]
+2: []
+1: []
+
+71: ["ruthenium chip", "ruthenium gen"] -> 4
+4: ["promethium chip", "promethium gen", "cobalt gen", "elerium gen", "elerium chip", "polonium gen", "polonium chip", "cobalt chip", "thulium chip", "thulium gen", "dilithium chip", "dilithium gen", "ruthenium chip", "ruthenium gen"]
+3: []
+2: []
+1: []
+
