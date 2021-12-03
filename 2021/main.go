@@ -14,7 +14,7 @@ func main() {
 	fmt.Println("Advent of Code 2021")
 
 	solution := solutions.Solution{}
-	solution.SolveDay2()
+	solution.SolveDay3()
 	for {
 		fmt.Print("<*> ")
 		text, _ := reader.ReadString('\n')
@@ -24,6 +24,8 @@ func main() {
 			solution.SolveDay1()
 		case "2":
 			solution.SolveDay2()
+		case "3":
+			solution.SolveDay3()
 		case "quit":
 			os.Exit(0)
 		default:
