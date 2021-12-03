@@ -6,57 +6,32 @@ import (
 	"strings"
 )
 
-func findO2rating(base int, o2values []uint16) (o2rating uint) {
-	for i := base - 1; i >= 0; i-- {
-		o2rating <<= 1
-		if len(o2values) == 1 {
-			continue
-		}
-
-		var midbase uint16 = 1 << i
-		var zeroes, ones []uint16
-		for _, v := range o2values {
-			if v >= midbase {
-				ones = append(ones, v%midbase)
-			} else {
-				zeroes = append(zeroes, v)
-			}
-		}
-
-		if len(ones) >= len(zeroes) {
-			o2rating++
-			o2values = ones
+func splitByFirstBit(midbase uint16, values []uint16) (ones, zeroes []uint16) {
+	for _, v := range values {
+		if v >= midbase {
+			ones = append(ones, v%midbase)
 		} else {
-			o2values = zeroes
+			zeroes = append(zeroes, v)
 		}
 	}
 
 	return
 }
 
-func findCO2rating(base int, co2values []uint16) (co2rating uint) {
+type FilterFn = func(ones, zeroes []uint16) ([]uint16, uint)
+
+func findRating(base int, values []uint16, filter FilterFn) (rating uint) {
 	for i := base - 1; i >= 0; i-- {
-		co2rating <<= 1
-		if len(co2values) == 1 {
+		rating <<= 1
+		if len(values) == 1 {
 			continue
 		}
 
 		var midbase uint16 = 1 << i
-		var zeroes, ones []uint16
-		for _, v := range co2values {
-			if v >= midbase {
-				ones = append(ones, v%midbase)
-			} else {
-				zeroes = append(zeroes, v)
-			}
-		}
-
-		if len(ones) >= len(zeroes) {
-			co2values = zeroes
-		} else {
-			co2rating++
-			co2values = ones
-		}
+		var offset uint
+		ones, zeroes := splitByFirstBit(midbase, values)
+		values, offset = filter(ones, zeroes)
+		rating += offset
 	}
 
 	return
@@ -75,11 +50,12 @@ func Solve() (part1, part2 int) {
 		numbers = append(numbers, uint16(number))
 	}
 
+	base := len(values[0])
 	var gammaRate, epsilonRate int
-	for i := 0; i < len(values[0]); i++ {
+	for i := 0; i < base; i++ {
 		var sum int
-		for j := 0; j < len(values); j++ {
-			sum += int(values[j][i] - byte('0'))
+		for _, v := range values {
+			sum += int(v[i] - byte('0'))
 		}
 
 		mostCommon := sum / (len(values) / 2)
@@ -89,7 +65,19 @@ func Solve() (part1, part2 int) {
 	}
 
 	part1 = gammaRate * epsilonRate
-	part2 = int(findO2rating(len(values[0]), numbers) * findCO2rating(len(values[0]), numbers))
+	o2rating := findRating(base, numbers, func(ones, zeroes []uint16) ([]uint16, uint) {
+		if len(ones) >= len(zeroes) {
+			return ones, 1
+		}
+		return zeroes, 0
+	})
+	co2rating := findRating(base, numbers, func(ones, zeroes []uint16) ([]uint16, uint) {
+		if len(ones) >= len(zeroes) {
+			return zeroes, 0
+		}
+		return ones, 1
+	})
+	part2 = int(o2rating * co2rating)
 
 	return
 }
