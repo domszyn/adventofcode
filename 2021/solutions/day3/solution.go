@@ -6,107 +6,90 @@ import (
 	"strings"
 )
 
+func findO2rating(base int, o2values []uint16) (o2rating uint) {
+	for i := base - 1; i >= 0; i-- {
+		o2rating <<= 1
+		if len(o2values) == 1 {
+			continue
+		}
+
+		var midbase uint16 = 1 << i
+		var zeroes, ones []uint16
+		for _, v := range o2values {
+			if v >= midbase {
+				ones = append(ones, v%midbase)
+			} else {
+				zeroes = append(zeroes, v)
+			}
+		}
+
+		if len(ones) >= len(zeroes) {
+			o2rating++
+			o2values = ones
+		} else {
+			o2values = zeroes
+		}
+	}
+
+	return
+}
+
+func findCO2rating(base int, co2values []uint16) (co2rating uint) {
+	for i := base - 1; i >= 0; i-- {
+		co2rating <<= 1
+		if len(co2values) == 1 {
+			continue
+		}
+
+		var midbase uint16 = 1 << i
+		var zeroes, ones []uint16
+		for _, v := range co2values {
+			if v >= midbase {
+				ones = append(ones, v%midbase)
+			} else {
+				zeroes = append(zeroes, v)
+			}
+		}
+
+		if len(ones) >= len(zeroes) {
+			co2values = zeroes
+		} else {
+			co2rating++
+			co2values = ones
+		}
+	}
+
+	return
+}
+
 func Solve() (part1, part2 int) {
 	scanner := bufio.NewScanner(strings.NewReader(Input))
 	scanner.Split(bufio.ScanLines)
 
-	var numbers []int64
 	var values []string
+	var numbers []uint16
 	for scanner.Scan() {
 		s := scanner.Text()
 		values = append(values, s)
-		n, _ := strconv.ParseInt(s, 2, 0)
-		numbers = append(numbers, n)
+		number, _ := strconv.ParseUint(s, 2, len(s))
+		numbers = append(numbers, uint16(number))
 	}
 
-	gammaRate := ""
-	epsilonRate := ""
+	var gammaRate, epsilonRate int
 	for i := 0; i < len(values[0]); i++ {
-		var digits = make(map[string]int)
+		var sum int
 		for j := 0; j < len(values); j++ {
-			digits[string(values[j][i])]++
+			sum += int(values[j][i] - byte('0'))
 		}
 
-		if digits["0"] > digits["1"] {
-			gammaRate += "0"
-			epsilonRate += "1"
-		} else {
-			gammaRate += "1"
-			epsilonRate += "0"
-		}
+		mostCommon := sum / (len(values) / 2)
+		leastCommon := mostCommon ^ 1
+		gammaRate = gammaRate<<1 + mostCommon
+		epsilonRate = epsilonRate<<1 + leastCommon
 	}
 
-	gr, _ := strconv.ParseInt(gammaRate, 2, 0)
-	er, _ := strconv.ParseInt(epsilonRate, 2, 0)
-
-	part1 = int(gr) * int(er)
-
-	var o2rating, co2rating string
-	searchNumbers := make([]string, len(values))
-	copy(searchNumbers, values)
-
-	for len(searchNumbers) > 1 {
-		for i := 0; i < len(searchNumbers[0]); i++ {
-			if len(searchNumbers) == 1 {
-				o2rating += string(searchNumbers[0][i])
-				continue
-			}
-
-			var digits = make(map[string]int)
-			for j := 0; j < len(searchNumbers); j++ {
-				digits[string(searchNumbers[j][i])]++
-			}
-
-			if digits["1"] >= digits["0"] {
-				o2rating += "1"
-			} else {
-				o2rating += "0"
-			}
-
-			var tmpNumbers []string
-			for j := 0; j < len(searchNumbers); j++ {
-				if string(searchNumbers[j][i]) == string(o2rating[len(o2rating)-1]) {
-					tmpNumbers = append(tmpNumbers, searchNumbers[j])
-				}
-			}
-			searchNumbers = tmpNumbers
-		}
-	}
-
-	searchNumbers = make([]string, len(values))
-	copy(searchNumbers, values)
-
-	for len(searchNumbers) > 1 {
-		for i := 0; i < len(values[0]); i++ {
-			if len(searchNumbers) == 1 {
-				co2rating += string(searchNumbers[0][i])
-				continue
-			}
-
-			var digits = make(map[string]int)
-			for j := 0; j < len(searchNumbers); j++ {
-				digits[string(searchNumbers[j][i])]++
-			}
-
-			if digits["0"] <= digits["1"] {
-				co2rating += "0"
-			} else {
-				co2rating += "1"
-			}
-
-			var tmpNumbers []string
-			for j := 0; j < len(searchNumbers); j++ {
-				if string(searchNumbers[j][i]) == string(co2rating[len(co2rating)-1]) {
-					tmpNumbers = append(tmpNumbers, searchNumbers[j])
-				}
-			}
-			searchNumbers = tmpNumbers
-		}
-	}
-
-	o2, _ := strconv.ParseInt(o2rating, 2, 0)
-	co2, _ := strconv.ParseInt(co2rating, 2, 0)
-	part2 = int(o2) * int(co2)
+	part1 = gammaRate * epsilonRate
+	part2 = int(findO2rating(len(values[0]), numbers) * findCO2rating(len(values[0]), numbers))
 
 	return
 }
