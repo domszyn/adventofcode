@@ -14,7 +14,6 @@ func main() {
 	fmt.Println("Advent of Code 2021")
 
 	solution := solutions.Solution{}
-	solution.SolveDay4()
 	for {
 		fmt.Print("<*> ")
 		text, _ := reader.ReadString('\n')
