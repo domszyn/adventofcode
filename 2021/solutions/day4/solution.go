@@ -62,30 +62,6 @@ func (board BingoBoard) hasWonAnyRowOrColumn() bool {
 	return false
 }
 
-func (board BingoBoard) hasWonDiagonal() bool {
-	for i, row := range board.Numbers {
-		if row[i] > 0 {
-			return false
-		}
-	}
-	return true
-}
-
-func (board BingoBoard) hasWonOtherDiagonal() bool {
-	for i, row := range board.Numbers {
-		if row[len(board.Numbers)-i-1] > 0 {
-			return false
-		}
-	}
-	return true
-}
-
-func (board BingoBoard) hasWon() bool {
-	return board.hasWonAnyRowOrColumn() ||
-		board.hasWonDiagonal() ||
-		board.hasWonOtherDiagonal()
-}
-
 func makeBoard() BingoBoard {
 	return BingoBoard{
 		Numbers: make([][]int, 5),
@@ -121,7 +97,7 @@ func Solve() (part1, part2 int) {
 	for _, n := range Numbers {
 		for bi, board := range boards {
 			dabbed := board.call(n + 1)
-			if dabbed && board.hasWon() {
+			if dabbed && board.hasWonAnyRowOrColumn() {
 				if part1 == 0 {
 					part1 = n * board.sumUnmarked()
 				}
