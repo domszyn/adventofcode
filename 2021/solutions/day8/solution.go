@@ -2,6 +2,7 @@ package day8
 
 import (
 	"bufio"
+	"sort"
 	"strings"
 )
 
@@ -10,13 +11,76 @@ type Entry struct {
 	Digits   []string
 }
 
-func sameDigits(d1, d2 string) bool {
-	if len(d1) != len(d2) {
-		return false
+func swap(s string, a, b rune) string {
+	var result []rune
+	for _, v := range s {
+		switch v {
+		case a:
+			result = append(result, b)
+		case b:
+			result = append(result, a)
+		default:
+			result = append(result, v)
+		}
+	}
+	return string(result)
+}
+
+func removeRune(s string, a rune) string {
+	var result []rune
+	for _, v := range s {
+		if v != a {
+			result = append(result, v)
+		}
+	}
+	return string(result)
+}
+
+func removeMultiple(s string, remove string) string {
+	for _, r := range remove {
+		s = removeRune(s, rune(r))
+	}
+	return s
+}
+
+func sortRunes(s string) string {
+	runes := []rune(s)
+	sort.Slice(runes, func(i, j int) bool { return runes[i] < runes[j] })
+	return string(runes)
+}
+
+func getDigit(digit int, layout string) (result string) {
+	switch digit {
+	case 0:
+		result = layout[:3] + layout[4:]
+	case 1:
+		result = layout[2:3] + layout[5:6]
+	case 2:
+		result = layout[:1] + layout[2:5] + layout[6:]
+	case 3:
+		result = layout[:1] + layout[2:4] + layout[5:]
+	case 4:
+		result = layout[1:4] + layout[5:6]
+	case 5:
+		result = layout[:2] + layout[3:4] + layout[5:]
+	case 6:
+		result = layout[:2] + layout[3:]
+	case 7:
+		result = layout[:1] + layout[2:3] + layout[5:6]
+	case 8:
+		result = layout
+	case 9:
+		result = layout[:4] + layout[5:]
 	}
 
-	for _, v := range d1 {
-		if strings.IndexRune(d2, v) == -1 {
+	return sortRunes(result)
+}
+
+func isLayoutValid(layout string, inputs []string) bool {
+	zero, six, nine := getDigit(0, layout), getDigit(6, layout), getDigit(9, layout)
+
+	for _, v := range inputs {
+		if len(v) == 6 && v != zero && v != six && v != nine {
 			return false
 		}
 	}
@@ -24,142 +88,75 @@ func sameDigits(d1, d2 string) bool {
 	return true
 }
 
-func convertDigit(digit string, connections map[rune]rune) (s string) {
-	s = ""
-	for _, v := range digit {
-		s += string(connections[v])
+func findPatterns(patterns []string) (one, four, seven, nine string) {
+	var nines []string
+	for _, pattern := range patterns {
+		switch len(pattern) {
+		case 2:
+			one = pattern
+		case 3:
+			seven = pattern
+		case 4:
+			four = pattern
+		case 6:
+			nines = append(nines, pattern)
+		}
 	}
 
+	for _, n := range nines {
+		if len(removeMultiple(n, one+four+seven)) == 1 {
+			nine = n
+			break
+		}
+	}
 	return
 }
 
-func getDigit(digit int) string {
-	switch digit {
-	case 0:
-		return "abcefg"
-	case 1:
-		return "cf"
-	case 2:
-		return "acdeg"
-	case 3:
-		return "acdfg"
-	case 4:
-		return "bcdf"
-	case 5:
-		return "abdfg"
-	case 6:
-		return "abdefg"
-	case 7:
-		return "acf"
-	case 8:
-		return "abcdefg"
-	case 9:
-		return "abcdfg"
+func getEncodedDigits(layout string) map[string]int {
+	digits := make(map[string]int)
+	for i := 0; i < 10; i++ {
+		digits[getDigit(i, layout)] = i
 	}
-
-	return ""
+	return digits
 }
 
 func rewire(entry Entry) (number int) {
-	connections := make(map[rune]rune)
+	layout := "abcdefg"
+	one, four, seven, nine := findPatterns(entry.Patterns)
 
-	mapped := ""
-	for _, v := range entry.Patterns {
-		if len(v) == 2 {
-			connections['c'] = rune(v[0])
-			connections['f'] = rune(v[1])
-			mapped += v
+	c, f := rune(one[0]), rune(one[1])
+	four = removeMultiple(four, one)
+	seven = removeMultiple(seven, one)
+	a, b, d := rune(seven[0]), rune(four[0]), rune(four[1])
+	nine = removeMultiple(nine, one+four+seven)
+	g := rune(nine[0])
+
+	layout = swap(layout, rune(layout[2]), c)
+	layout = swap(layout, rune(layout[5]), f)
+	layout = swap(layout, rune(layout[0]), a)
+	layout = swap(layout, rune(layout[1]), b)
+	layout = swap(layout, rune(layout[3]), d)
+	layout = swap(layout, rune(layout[6]), g)
+	layouts := []string{
+		layout,
+		swap(layout, c, f),
+		swap(layout, b, d),
+		swap(swap(layout, c, f), b, d),
+	}
+
+	for _, l := range layouts {
+		if isLayoutValid(l, entry.Patterns) {
+			layout = l
 			break
 		}
 	}
-	for _, v := range entry.Patterns {
-		if len(v) == 3 {
-			for _, c := range v {
-				if strings.IndexRune(mapped, c) == -1 {
-					connections['a'] = c
-					mapped += string(c)
-					break
-				}
-			}
-			break
-		}
-	}
-	for _, v := range entry.Patterns {
-		if len(v) == 4 {
-			for _, c := range v {
-				if strings.IndexRune(mapped, c) == -1 {
-					if _, found := connections['b']; !found {
-						connections['b'] = c
-					} else {
-						connections['d'] = c
-					}
-					mapped += string(c)
-				}
-			}
-			break
-		}
-	}
-	for _, v := range entry.Patterns {
-		if len(v) == 6 {
-			var unmapped []rune
-			for _, c := range v {
-				if strings.IndexRune(mapped, c) == -1 {
-					unmapped = append(unmapped, c)
-				}
-			}
 
-			if len(unmapped) == 1 {
-				connections['g'] = unmapped[0]
-				mapped += string(unmapped[0])
-
-				for c := 'a'; c <= 'g'; c++ {
-					if strings.IndexRune(mapped, c) == -1 {
-						connections['e'] = c
-						mapped += string(c)
-						break
-					}
-				}
-				break
-			}
+	digits := getEncodedDigits(layout)
+	for i, v := range entry.Digits {
+		number += digits[v]
+		if i < 3 {
+			number *= 10
 		}
-	}
-
-	decodedDigits := make(map[int]string)
-	var swapbd, swapfc bool
-	for len(decodedDigits) < 10 {
-		for _, v := range entry.Patterns {
-			for i := 0; i < 10; i++ {
-				d := getDigit(i)
-				cd := convertDigit(d, connections)
-				if sameDigits(v, cd) {
-					decodedDigits[i] = v
-					break
-				}
-			}
-		}
-		if len(decodedDigits) < 10 && !swapfc {
-			connections['c'], connections['f'] = connections['f'], connections['c']
-			swapfc = true
-		} else if len(decodedDigits) < 10 && !swapbd {
-			connections['b'], connections['d'] = connections['d'], connections['b']
-			swapbd = true
-		} else if len(decodedDigits) < 10 && swapfc {
-			connections['c'], connections['f'] = connections['f'], connections['c']
-			swapfc = false
-		}
-	}
-
-	for _, v := range entry.Digits {
-		if v == "" {
-			continue
-		}
-		for i := 0; i < 10; i++ {
-			if sameDigits(v, decodedDigits[i]) {
-				number += i
-				break
-			}
-		}
-		number *= 10
 	}
 	return
 }
@@ -172,9 +169,17 @@ func Solve() (part1, part2 int) {
 	for scanner.Scan() {
 		s := scanner.Text()
 		parts := strings.Split(s, "|")
+		patterns := strings.Split(parts[0][:len(parts[0])-1], " ")
+		for i, p := range patterns {
+			patterns[i] = sortRunes(p)
+		}
+		digits := strings.Split(parts[1][1:], " ")
+		for i, d := range digits {
+			digits[i] = sortRunes(d)
+		}
 		entries = append(entries, Entry{
-			Patterns: strings.Split(parts[0][:len(parts[0])-1], " "),
-			Digits:   strings.Split(parts[1][1:], " "),
+			Patterns: patterns,
+			Digits:   digits,
 		})
 	}
 
