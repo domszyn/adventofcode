@@ -12,6 +12,7 @@ import (
 	"github.com/domszyn/adventofcode/2021/solutions/day6"
 	"github.com/domszyn/adventofcode/2021/solutions/day7"
 	"github.com/domszyn/adventofcode/2021/solutions/day8"
+	"github.com/domszyn/adventofcode/2021/solutions/day9"
 )
 
 type Solution struct {
@@ -78,6 +79,13 @@ func (s *Solution) SolveDay7() {
 func (s *Solution) SolveDay8() {
 	start := time.Now()
 	s.Part1, s.Part2 = day8.Solve()
+	s.ExecTime = time.Since(start)
+	s.Print()
+}
+
+func (s *Solution) SolveDay9() {
+	start := time.Now()
+	s.Part1, s.Part2 = day9.Solve()
 	s.ExecTime = time.Since(start)
 	s.Print()
 }
