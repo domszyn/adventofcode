@@ -7,7 +7,7 @@ public class Tower
 
     public int TotalWeight => OwnWeight + disc.Select(t => t.TotalWeight).Sum();
 
-    public Tower UnbalancedSubTower()
+    public Tower? UnbalancedSubTower()
     {
         if (disc.Count < 2)
         {
