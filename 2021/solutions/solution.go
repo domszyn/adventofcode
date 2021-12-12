@@ -100,11 +100,13 @@ func (s *Solution) SolveDay10() {
 	s.Print()
 }
 
-func (s *Solution) SolveDay11() {
+func (s *Solution) SolveDay11(animate bool) {
 	start := time.Now()
-	s.Part1, s.Part2 = day11.Solve()
+	s.Part1, s.Part2 = day11.Solve(animate)
 	s.ExecTime = time.Since(start)
-	s.Print()
+	if !animate {
+		s.Print()
+	}
 }
 
 func (s *Solution) SolveDay12() {

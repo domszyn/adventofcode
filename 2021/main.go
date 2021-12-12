@@ -40,7 +40,9 @@ func main() {
 		case "10":
 			solution.SolveDay10()
 		case "11":
-			solution.SolveDay11()
+			solution.SolveDay11(false)
+		case "11 animate":
+			solution.SolveDay11(true)
 		case "12":
 			solution.SolveDay12()
 		case "quit":
