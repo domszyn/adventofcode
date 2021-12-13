@@ -4,13 +4,11 @@ import (
 	"bufio"
 	"strconv"
 	"strings"
-
-	tm "github.com/buger/goterm"
 )
 
 type Dot struct{ x, y int }
 
-func Solve() (part1, part2 int) {
+func Solve() (part1 int, part2 string) {
 	scanner := bufio.NewScanner(strings.NewReader(Input))
 	scanner.Split(bufio.ScanLines)
 
@@ -54,8 +52,6 @@ func Solve() (part1, part2 int) {
 						part1++
 					}
 				}
-				tm.Clear()
-				tm.Printf("Part 1: %d", part1)
 			}
 
 			foldsCount++
@@ -67,14 +63,26 @@ func Solve() (part1, part2 int) {
 		}
 	}
 
-	var cleanPaper []Dot
+	var maxX, maxY int
 	for dot, val := range paper {
-		if val {
-			cleanPaper = append(cleanPaper, dot)
-			tm.MoveCursor(dot.x+1, dot.y+2)
-			tm.Println("#")
-			tm.Flush()
+		if val && dot.x > maxX {
+			maxX = dot.x
 		}
+		if val && dot.y > maxY {
+			maxY = dot.y
+		}
+	}
+
+	part2 = "\n\n"
+	for y := 0; y <= maxY; y++ {
+		for x := 0; x <= maxX; x++ {
+			if paper[Dot{x, y}] {
+				part2 += "#"
+			} else {
+				part2 += "."
+			}
+		}
+		part2 += "\n"
 	}
 
 	return

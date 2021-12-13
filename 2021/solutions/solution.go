@@ -121,4 +121,5 @@ func (s *Solution) SolveDay13() {
 	start := time.Now()
 	s.Part1, s.Part2 = day13.Solve()
 	s.ExecTime = time.Since(start)
+	s.Print()
 }
