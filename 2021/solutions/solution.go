@@ -13,6 +13,7 @@ import (
 	"github.com/domszyn/adventofcode/2021/solutions/day15"
 	"github.com/domszyn/adventofcode/2021/solutions/day16"
 	"github.com/domszyn/adventofcode/2021/solutions/day17"
+	"github.com/domszyn/adventofcode/2021/solutions/day18"
 	"github.com/domszyn/adventofcode/2021/solutions/day2"
 	"github.com/domszyn/adventofcode/2021/solutions/day3"
 	"github.com/domszyn/adventofcode/2021/solutions/day4"
@@ -152,6 +153,13 @@ func (s *Solution) SolveDay16() {
 func (s *Solution) SolveDay17() {
 	start := time.Now()
 	s.Part1, s.Part2 = day17.Solve()
+	s.ExecTime = time.Since(start)
+	s.Print()
+}
+
+func (s *Solution) SolveDay18() {
+	start := time.Now()
+	s.Part1, s.Part2 = day18.Solve()
 	s.ExecTime = time.Since(start)
 	s.Print()
 }
