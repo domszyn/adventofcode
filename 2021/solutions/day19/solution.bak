@@ -1,0 +1,285 @@
+package day19
+
+import (
+	"bufio"
+	"fmt"
+	"strings"
+)
+
+type Point struct{ X, Y, Z int }
+type Vector = Point
+
+func (v Vector) Hash() int {
+	return (v.X + 2500) + 5000*(v.Y+2500) + 5000*5000*(v.Z+2500)
+}
+
+func (p1 Point) Substract(p2 Point) Point {
+	return Point{
+		X: p1.X - p2.X,
+		Y: p1.Y - p2.Y,
+		Z: p1.Z - p2.Z,
+	}
+}
+
+func (p1 Point) Add(p2 Point) Point {
+	return Point{
+		X: p1.X + p2.X,
+		Y: p1.Y + p2.Y,
+		Z: p1.Z + p2.Z,
+	}
+}
+
+func (p1 Point) Equals(p2 Point) bool {
+	return p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z
+}
+
+type Scanner struct {
+	ID      int
+	Beacons []Beacon
+}
+
+type Beacon struct {
+	Orientations [24]Orientation
+}
+
+type Orientation struct {
+	Location Point
+	Vectors  []int
+}
+
+type RotateBeaconFn func(b Point) Point
+
+func rotateBeacons(beacons []Point, rotateFn RotateBeaconFn) (rotated []Point) {
+	for _, b := range beacons {
+		rotated = append(rotated, rotateFn(b))
+	}
+	return
+}
+
+func normalize(b Point, rotateFn RotateBeaconFn) Point {
+	return rotateFn(rotateFn(rotateFn(b)))
+}
+
+func getBeaconMap(beacons []Point) map[Point]bool {
+	beaconMap := make(map[Point]bool, len(beacons))
+	for _, b := range beacons {
+		beaconMap[b] = true
+	}
+	return beaconMap
+}
+
+func findDiff(composite map[Point]bool, beacons []Point) (Point, bool) {
+	matches := make(map[Point]int)
+	for b := range composite {
+		for j := 0; j < len(beacons); j++ {
+			diff := beacons[j].Substract(b)
+
+			// diff = b2 - b1
+			// b1 = b2 - diff
+			// b2 = b1 + diff
+			// b2 - b2 + b1
+
+			// if _, found := matches[diff]; found {
+			// 	continue
+			// }
+
+			for k := 0; k < len(beacons); k++ {
+				if _, found := composite[beacons[k].Substract(diff)]; found {
+					matches[diff]++
+				}
+			}
+			if matches[diff] < 12 {
+				delete(matches, diff)
+			} else {
+				return diff, true
+			}
+		}
+	}
+
+	return Point{}, false
+}
+
+func Solve() (part1, part2 int) {
+	rotations := []RotateBeaconFn{
+		func(b Point) Point { return Point{X: b.X, Y: b.Y, Z: b.Z} },
+		func(b Point) Point { return Point{X: b.X, Y: -b.Z, Z: b.Y} },
+		func(b Point) Point { return Point{X: b.X, Y: -b.Y, Z: -b.Z} },
+		func(b Point) Point { return Point{X: b.X, Y: b.Z, Z: -b.Y} },
+
+		func(b Point) Point { return Point{X: -b.X, Y: b.Y, Z: b.Z} },
+		func(b Point) Point { return Point{X: -b.X, Y: -b.Z, Z: b.Y} },
+		func(b Point) Point { return Point{X: -b.X, Y: -b.Y, Z: -b.Z} },
+		func(b Point) Point { return Point{X: -b.X, Y: b.Z, Z: -b.Y} },
+
+		func(b Point) Point { return Point{X: b.Y, Y: b.Z, Z: b.X} },
+		func(b Point) Point { return Point{X: b.Y, Y: -b.X, Z: b.Z} },
+		func(b Point) Point { return Point{X: b.Y, Y: -b.Z, Z: -b.X} },
+		func(b Point) Point { return Point{X: b.Y, Y: b.X, Z: -b.Z} },
+
+		func(b Point) Point { return Point{X: -b.Y, Y: b.Z, Z: b.X} },
+		func(b Point) Point { return Point{X: -b.Y, Y: -b.X, Z: b.Z} },
+		func(b Point) Point { return Point{X: -b.Y, Y: -b.Z, Z: -b.X} },
+		func(b Point) Point { return Point{X: -b.Y, Y: b.X, Z: -b.Z} },
+
+		func(b Point) Point { return Point{X: b.Z, Y: b.X, Z: b.Y} },
+		func(b Point) Point { return Point{X: b.Z, Y: -b.Y, Z: b.X} },
+		func(b Point) Point { return Point{X: b.Z, Y: -b.X, Z: -b.Y} },
+		func(b Point) Point { return Point{X: b.Z, Y: b.Y, Z: -b.X} },
+
+		func(b Point) Point { return Point{X: -b.Z, Y: b.X, Z: b.Y} },
+		func(b Point) Point { return Point{X: -b.Z, Y: -b.Y, Z: b.X} },
+		func(b Point) Point { return Point{X: -b.Z, Y: -b.X, Z: -b.Y} },
+		func(b Point) Point { return Point{X: -b.Z, Y: b.Y, Z: -b.X} },
+	}
+
+	inputScanner := bufio.NewScanner(strings.NewReader(Input))
+	inputScanner.Split(bufio.ScanLines)
+
+	beaconMap := make(map[int][]Point)
+	var scannerID int
+	for inputScanner.Scan() {
+		s := inputScanner.Text()
+		if s == "" {
+			continue
+		}
+		if _, err := fmt.Sscanf(s, "--- scanner %d ---", &scannerID); err == nil {
+			beaconMap[scannerID] = []Point{}
+		} else {
+			var x, y, z int
+			fmt.Sscanf(s, "%d,%d,%d", &x, &y, &z)
+			beaconMap[scannerID] = append(beaconMap[scannerID], Point{X: x, Y: y, Z: z})
+		}
+
+		scanners := make(map[int]Scanner)
+		for id, beacons := range beaconMap {
+			scanner := Scanner{
+				ID:      id,
+				Beacons: make([]Beacon, 0, 30),
+			}
+
+			for _, location := range beacons {
+				beacon := Beacon{}
+				for i, rotateFn := range rotations {
+					beacon.Orientations[i] = Orientation{
+						Location: rotateFn(location),
+					}
+				}
+
+				scanner.Beacons = append(scanner.Beacons, beacon)
+			}
+		}
+
+		part1 = len(scanners)
+
+		composite := make(map[Point]bool)
+		for _, beacon := range scanners[0].Rotations[0] {
+			composite[beacon] = true
+		}
+		locatedScanners := make(map[int]bool)
+		locatedScanners[0] = true
+
+		for len(locatedScanners) < len(scanners) {
+			for i, scanner := range scanners {
+				if locatedScanners[scanner.ID] {
+					continue
+				}
+
+				for j, rotation := range scanner.Rotations {
+					diff, overlaps := findDiff(composite, rotation)
+
+					if overlaps {
+						for _, v := range rotation {
+							b := v.Substract(diff)
+							composite[Point{X: b.X, Y: b.Y, Z: b.Z}] = true
+						}
+
+						locatedScanners[scanner.ID] = true
+						fmt.Printf("[%d(%d)] diff=%v\n", i, j, diff)
+					}
+				}
+			}
+		}
+
+		/*connected := make(map[Beacon]Beacon)
+		// done := make(map[int]bool, len(scanners))
+		// done[0] = true
+
+		// for len(done) < len(scanners) {
+		// 	for i := 0; i < len(scanners); i++ {
+		// 		for k := 0; k < len(rotations) && !done[i]; k++ {
+		// 			rotated := [][]Beacon{
+		// 				scanners[0].GetBeacons(),
+		// 				rotateBeacons(scanners[i].GetBeacons(), rotations[k]),
+		// 			}
+
+		// 			if diff, overlaps := findBeaconOverlaps(rotated[0], rotated[1]); overlaps {
+		// 				fmt.Println(normalize(diff, rotations[k]))
+
+		// 				scanners[0].ReplaceBeacons(rotated[0])
+		// 				for _, v := range rotated[1] {
+		// 					b := v.Substract(diff)
+		// 					scanners[0].AddBeacon(b.X, b.Y, b.Z)
+		// 				}
+
+		// 				done[i] = true
+		// 				fmt.Printf("[%d(%d)] diff=%v\n", i, k, diff)
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+		connections := make([][]*Beacon, len(scanners))
+		for i := 0; i < len(connections); i++ {
+			connections[i] = make([]*Beacon, len(scanners))
+		}
+		for i := 0; i < len(scanners); i++ {
+			for j := i + 1; j < len(scanners); j++ {
+				for k := 0; k < len(rotations); k++ {
+					if _, found := connected[Beacon{X: i, Y: j}]; found {
+						break
+					}
+					for l := 0; l < len(rotations); l++ {
+						if _, found := connected[Beacon{X: i, Y: j}]; found {
+							break
+						}
+						rotated := [][]Beacon{
+							rotateBeacons(scanners[i].GetBeacons(), rotations[k]),
+							rotateBeacons(scanners[j].GetBeacons(), rotations[l]),
+						}
+
+						diff, overlaps := findBeaconOverlaps(rotated[0], rotated[1])
+						if overlaps {
+							fmt.Println(normalize(diff, rotations[0]))
+							scanners[i].ReplaceBeacons(rotated[0])
+							for _, v := range rotated[1] {
+								b := v.Substract(diff)
+								scanners[0].AddBeacon(b.X, b.Y, b.Z)
+							}
+							scanners[j].ReplaceBeacons(rotated[1])
+
+							connected[Beacon{X: i, Y: j}] = diff
+							connections[i][j] = &diff
+							rev := Beacon{}.Substract(diff)
+							connections[j][i] = &rev
+							fmt.Printf("[%d(%d),%d(%d)] diff=%v\n", i, k, j, l, diff)
+						}
+					}
+				}
+			}
+		}
+
+		for i := 0; i < len(connections); i++ {
+			for j := 0; j < len(connections); j++ {
+				if i == j {
+					continue
+				}
+			}
+		}
+
+		part1 = len(scanners[0].Beacons)*/
+
+		part1 = len(composite)
+
+		return
+	}
+}
