@@ -2,37 +2,10 @@ package day15
 
 import (
 	"bufio"
+	"fmt"
 	"math"
 	"strings"
 )
-
-type Point struct {
-	Value   int
-	Visited bool
-	Risk    int
-}
-
-func findPointWithLowestRisk(points [][]Point) (int, int) {
-	minRisk := math.MaxInt64
-
-	for _, row := range points {
-		for _, p := range row {
-			if !p.Visited && p.Risk < minRisk {
-				minRisk = p.Risk
-			}
-		}
-	}
-
-	for j, row := range points {
-		for i, p := range row {
-			if !p.Visited && p.Risk == minRisk {
-				return i, j
-			}
-		}
-	}
-
-	return 0, 0
-}
 
 func min(a, b int) int {
 	if a < b {
@@ -42,71 +15,91 @@ func min(a, b int) int {
 	return b
 }
 
-func allVisited(points [][]Point) bool {
-	for _, row := range points {
-		for _, p := range row {
-			if !p.Visited {
-				return false
-			}
+func getNeighbors(location Location, points map[Location]Point) (neighbours []Location) {
+	locations := []Location{
+		{X: location.X - 1, Y: location.Y},
+		{X: location.X + 1, Y: location.Y},
+		{X: location.X, Y: location.Y - 1},
+		{X: location.X, Y: location.Y + 1},
+	}
+
+	for _, loc := range locations {
+		if _, found := points[loc]; found {
+			neighbours = append(neighbours, loc)
 		}
 	}
 
-	return true
+	return
 }
 
-func getMinRisk(points [][]Point) int {
-	points[0][0].Risk = 0
+func getMinRisk(points map[Location]Point, goal Location) int {
+	openSet := make(map[Location]Point)
+	openSet[Location{X: 0, Y: 0}] = points[Location{X: 0, Y: 0}]
 
-	x, y := 0, 0
-	for !points[len(points)-1][len(points[0])-1].Visited {
-		if x+1 < len(points[0]) && !points[y][x+1].Visited {
-			points[y][x+1].Risk = min(points[y][x+1].Risk, points[y][x].Risk+points[y][x].Value)
+	gScore := make(map[Location]int)
+	fScore := make(map[Location]int)
+	for location := range points {
+		gScore[location] = math.MaxInt64
+		fScore[location] = math.MaxInt64
+	}
+	gScore[Location{X: 0, Y: 0}] = 0
+	fScore[Location{X: 0, Y: 0}] = 0 // 2 * len(points)
+
+	for len(openSet) > 0 {
+		minFScore := math.MaxInt64
+		var current Location
+		for location := range openSet {
+			if fScore[location] < minFScore {
+				minFScore = fScore[location]
+				current = location
+			}
 		}
 
-		if y+1 < len(points) && !points[y+1][x].Visited {
-			points[y+1][x].Risk = min(points[y+1][x].Risk, points[y][x].Risk+points[y][x].Value)
+		if current.X == goal.X && current.Y == goal.Y {
+			break
 		}
 
-		if x-1 > 0 && !points[y][x-1].Visited {
-			points[y][x-1].Risk = min(points[y][x-1].Risk, points[y][x].Risk+points[y][x].Value)
+		delete(openSet, current)
+
+		for _, neighbor := range getNeighbors(current, points) {
+			tentativeGScore := gScore[current] + points[current].Risk
+			if tentativeGScore < gScore[neighbor] {
+				gScore[neighbor] = tentativeGScore
+				fScore[neighbor] = tentativeGScore //+ 2*len(points) - neighbor.X - neighbor.Y
+
+				if _, found := openSet[neighbor]; !found {
+					openSet[neighbor] = points[neighbor]
+				}
+			}
 		}
 
-		if y-1 > 0 && !points[y-1][x].Visited {
-			points[y-1][x].Risk = min(points[y-1][x].Risk, points[y][x].Risk+points[y][x].Value)
-		}
-
-		points[y][x].Visited = true
-		x, y = findPointWithLowestRisk(points)
+		fmt.Printf("Open neighbors: %d\n", len(openSet))
 	}
 
-	return points[len(points)-1][len(points[0])-1].Risk + points[len(points)-1][len(points[0])-1].Value - points[0][0].Value
+	return gScore[goal]
 }
 
 func SolvePart1() (part1 int) {
 	scanner := bufio.NewScanner(strings.NewReader(Input))
 	scanner.Split(bufio.ScanLines)
 
-	var rows []string
-	var points [][]Point
-	for scanner.Scan() {
+	var gridSize int
+	points := make(map[Location]Point)
+	for y := 0; scanner.Scan(); y++ {
 		s := scanner.Text()
-		rows = append(rows)
-		var pp []Point
-		for _, v := range s {
+		gridSize = len(s)
+		for x, v := range s {
 			value := int(v - '0')
-			pp = append(pp, Point{Value: value, Risk: math.MaxInt64})
+			points[Location{X: x, Y: y}] = Point{
+				X:         x,
+				Y:         y,
+				Risk:      value,
+				TotalRisk: 2*len(s) - x - y,
+			}
 		}
-		points = append(points, pp)
 	}
 
-	part1 = getMinRisk(points)
-
-	// for _, row := range points {
-	// 	for _, p := range row {
-	// 		fmt.Printf("%d(%d)\t", p.Value, p.Risk)
-	// 	}
-	// 	fmt.Println()
-	// }
+	part1 = getMinRisk(points, Location{X: gridSize - 1, Y: gridSize - 1})
 
 	return
 }
@@ -115,40 +108,41 @@ func SolvePart2() (part1 int) {
 	scanner := bufio.NewScanner(strings.NewReader(Input))
 	scanner.Split(bufio.ScanLines)
 
-	var rows []string
-	var pattern [][]Point
-	for scanner.Scan() {
+	var gridSize int
+	pattern := make(map[Location]Point)
+	for y := 0; scanner.Scan(); y++ {
 		s := scanner.Text()
-		rows = append(rows)
-		var pp []Point
-		for _, v := range s {
-			pp = append(pp, Point{Value: int(v - '0')})
-		}
-		pattern = append(pattern, pp)
-	}
-
-	pattern[0][0].Risk = 0
-
-	points := make([][]Point, len(pattern)*5)
-
-	for y := 0; y < len(points); y++ {
-		points[y] = make([]Point, len(pattern)*5)
-
-		for x := 0; x < len(points); x++ {
-			offset := int(y/len(pattern)) + int(x/len(pattern))
-			points[y][x] = Point{
-				Value:   pattern[y%len(pattern)][x%len(pattern)].Value + offset,
-				Visited: false,
-				Risk:    math.MaxInt64,
-			}
-
-			if points[y][x].Value > 9 {
-				points[y][x].Value -= 9
+		gridSize = len(s)
+		for x, v := range s {
+			value := int(v - '0')
+			pattern[Location{X: x, Y: y}] = Point{
+				X:         x,
+				Y:         y,
+				Risk:      value,
+				TotalRisk: 2*len(s) - x - y,
 			}
 		}
 	}
 
-	part1 = getMinRisk(points)
+	points := make(map[Location]Point)
+
+	for y := 0; y < gridSize*5; y++ {
+		for x := 0; x < gridSize*5; x++ {
+			offset := int(y/gridSize) + int(x/gridSize)
+			risk := pattern[Location{X: x % gridSize, Y: y % gridSize}].Risk + offset
+			if risk > 9 {
+				risk -= 9
+			}
+			points[Location{X: x, Y: y}] = Point{
+				X:         x,
+				Y:         y,
+				Risk:      risk,
+				TotalRisk: 10*gridSize - x - y,
+			}
+		}
+	}
+
+	part1 = getMinRisk(points, Location{X: 5*gridSize - 1, Y: 5*gridSize - 1})
 
 	return
 }
