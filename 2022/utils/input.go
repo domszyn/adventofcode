@@ -23,21 +23,3 @@ func ReadInput[T any](file string, mapFn func(string) T) (result []T) {
 
 	return
 }
-
-func Max(numbers []int) (max int) {
-	for i := 0; i < len(numbers); i++ {
-		if numbers[i] > max {
-			max = numbers[i]
-		}
-	}
-
-	return
-}
-
-func Sum(numbers []int) (sum int) {
-	for i := 0; i < len(numbers); i++ {
-		sum += numbers[i]
-	}
-
-	return
-}
