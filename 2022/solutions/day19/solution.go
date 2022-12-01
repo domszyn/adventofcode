@@ -1,4 +1,4 @@
-package day19 
+package day19
 
 import (
 	"github.com/domszyn/adventofcode/2022/mappers"
@@ -6,7 +6,7 @@ import (
 )
 
 func Solve() (int, int) {
-	lines := utils.ReadInput(mappers.ToString)
+	lines := utils.ReadInput("./solutions/day19/input.txt", mappers.ToString)
 
 	return len(lines), len(lines)
 }
