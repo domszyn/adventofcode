@@ -2,21 +2,18 @@ package day03
 
 import (
 	"strings"
+	"unicode"
 
 	"github.com/domszyn/adventofcode/2022/mappers"
 	"github.com/domszyn/adventofcode/2022/utils"
 )
 
 func count(item rune) int32 {
-	if item >= 'a' && item <= 'z' {
+	if unicode.IsLower(item) {
 		return item - 'a' + 1
 	}
 
-	if item >= 'A' && item <= 'Z' {
-		return item - 'A' + 27
-	}
-
-	return 0
+	return item - 'A' + 27
 }
 
 func Solve() (part1 int32, part2 int32) {
