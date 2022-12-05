@@ -31,42 +31,61 @@ func getStacks() (stacks []string) {
 	return
 }
 
+type Crane struct {
+	Stacks []string
+}
+
 func parseMoveInstruction(move string) (n, from, to int) {
 	fmt.Sscanf(move, "move %d from %d to %d", &n, &from, &to)
-	from--
-	to--
 	return
 }
 
-func Solve() (part1 string, part2 string) {
-	moves := utils.ReadInput("./solutions/day05/moves.txt", mappers.ToString)
-	stacks1 := getStacks()
-	stacks2 := make([]string, len(stacks1))
-	copy(stacks2, stacks1)
+func (c *Crane) Load(stacks []string) {
+	c.Stacks = make([]string, len(stacks))
+	copy(c.Stacks, stacks)
+}
 
-	for _, move := range moves {
+func (c *Crane) MoveOneByOne(nCrates int, from, to int) {
+	var removedCrates string
+	splitAt := len(c.Stacks[from-1]) - nCrates
+	removedCrates, c.Stacks[from-1] = c.Stacks[from-1][splitAt:], c.Stacks[from-1][:splitAt]
 
-		n, from, to := parseMoveInstruction(move)
-
-		removed1 := stacks1[from][len(stacks1[from])-n:]
-		removed2 := stacks2[from][len(stacks2[from])-n:]
-		stacks1[from] = stacks1[from][:len(stacks1[from])-n]
-		stacks2[from] = stacks2[from][:len(stacks2[from])-n]
-
-		for i := len(removed1) - 1; i >= 0; i-- {
-			stacks1[to] += string(removed1[i])
-		}
-
-		stacks2[to] += removed2
+	for i := len(removedCrates) - 1; i >= 0; i-- {
+		c.Stacks[to-1] += string(removedCrates[i])
 	}
+}
 
-	for _, s := range stacks1 {
-		part1 += string(s[len(s)-1])
-	}
+func (c *Crane) MoveAll(nCrates int, from, to int) {
+	var removedCrates string
+	splitAt := len(c.Stacks[from-1]) - nCrates
+	removedCrates, c.Stacks[from-1] = c.Stacks[from-1][splitAt:], c.Stacks[from-1][:splitAt]
 
-	for _, s := range stacks2 {
-		part2 += string(s[len(s)-1])
+	c.Stacks[to-1] += removedCrates
+}
+
+func (c *Crane) ReadStackTops() (result string) {
+	for _, s := range c.Stacks {
+		result += string(s[len(s)-1])
 	}
 
 	return
+}
+
+func Solve() (string, string) {
+	moves := utils.ReadInput("./solutions/day05/moves.txt", mappers.ToString)
+	stacks := getStacks()
+
+	var crane1, crane2 Crane
+
+	crane1.Load(stacks)
+	crane2.Load(stacks)
+
+	for _, move := range moves {
+		n, from, to := parseMoveInstruction(move)
+
+		crane1.MoveOneByOne(n, from, to)
+		crane2.MoveAll(n, from, to)
+	}
+
+	return crane1.ReadStackTops(), crane2.ReadStackTops()
 }
