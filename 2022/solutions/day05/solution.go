@@ -7,18 +7,28 @@ import (
 	"github.com/domszyn/adventofcode/2022/utils"
 )
 
-func getStacks() []string {
-	return []string{
-		"QSWCZVFT",
-		"QRB",
-		"BZTQPMS",
-		"DVFRQH",
-		"JGLDBSTP",
-		"WRTZ",
-		"HQMNSFRJ",
-		"RNFHW",
-		"JZTQPRB",
+func getStacks() (stacks []string) {
+	stackLines := utils.ReadInput("./solutions/day05/stacks.txt", mappers.ToString)
+
+	for i := len(stackLines) - 1; i >= 0; i-- {
+		line := stackLines[i]
+
+		for j := 0; j < len(line); j += 4 {
+			elem := string(line[j+1])
+
+			if elem == " " {
+				continue
+			}
+
+			if (j+1)/4 >= len(stacks) {
+				stacks = append(stacks, elem)
+			} else {
+				stacks[(j+1)/4] += elem
+			}
+		}
 	}
+
+	return
 }
 
 func parseMoveInstruction(move string) (n, from, to int) {
@@ -31,7 +41,8 @@ func parseMoveInstruction(move string) (n, from, to int) {
 func Solve() (part1 string, part2 string) {
 	moves := utils.ReadInput("./solutions/day05/moves.txt", mappers.ToString)
 	stacks1 := getStacks()
-	stacks2 := getStacks()
+	stacks2 := make([]string, len(stacks1))
+	copy(stacks2, stacks1)
 
 	for _, move := range moves {
 
