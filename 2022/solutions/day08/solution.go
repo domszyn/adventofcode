@@ -5,41 +5,18 @@ import (
 	"github.com/domszyn/adventofcode/2022/utils"
 )
 
-func treesLeft(trees [][]byte, x, y int) []byte {
-	if x == 0 {
-		return []byte{}
-	}
-
-	return trees[y][:x]
+func splitAt(slice []int, n int) ([]int, []int) {
+	return slice[:n], slice[n+1:]
 }
 
-func treesRight(trees [][]byte, x, y int) []byte {
-	if x == len(trees[y])-1 {
-		return []byte{}
-	}
-
-	return trees[y][x+1:]
+type Map = [][]int
+type Tree struct {
+	Height int
 }
 
-func treesUp(trees [][]byte, x, y int) (tt []byte) {
-	for i := 0; i < y; i++ {
-		tt = append(tt, trees[i][x])
-	}
-
-	return
-}
-
-func treesDown(trees [][]byte, x, y int) (tt []byte) {
-	for i := y + 1; i < len(trees); i++ {
-		tt = append(tt, trees[i][x])
-	}
-
-	return
-}
-
-func allLower(trees []byte, n byte) bool {
+func (tree Tree) IsHigherThan(trees []int) bool {
 	for _, t := range trees {
-		if t >= n {
+		if t >= tree.Height {
 			return false
 		}
 	}
@@ -47,18 +24,10 @@ func allLower(trees []byte, n byte) bool {
 	return true
 }
 
-func reverse(items []byte) (res []byte) {
-	for i := len(items) - 1; i >= 0; i-- {
-		res = append(res, items[i])
-	}
-
-	return
-}
-
-func countVisible(trees []byte, n byte) (count int) {
-	for _, t := range trees {
+func (tree Tree) CountVisible(trees []int) (count int) {
+	for i := 0; i < len(trees); i++ {
 		count++
-		if t >= n {
+		if trees[i] >= tree.Height {
 			break
 		}
 	}
@@ -66,40 +35,65 @@ func countVisible(trees []byte, n byte) (count int) {
 	return
 }
 
-func Solve() (part1 int, part2 int) {
-	lines := utils.ReadInput("./solutions/day08/input.txt", mappers.ToString)
-
-	trees := make([][]byte, len(lines))
-
-	for i, v := range lines {
-		trees[i] = make([]byte, len(lines[i]))
-
-		for j := 0; j < len(v); j++ {
-			trees[i][j] = v[j] - byte('0')
+func (tree Tree) CountVisibleInReverse(trees []int) (count int) {
+	for i := len(trees) - 1; i >= 0; i-- {
+		count++
+		if trees[i] >= tree.Height {
+			break
 		}
 	}
 
+	return
+}
+
+func initMaps() (map1, map2 Map) {
+	lines := utils.ReadInput("./solutions/day08/input.txt", mappers.ToString)
+	height := len(lines)
+	width := len(lines[0])
+	map1 = make(Map, height)
+	map2 = make(Map, width)
+
+	for y := 0; y < len(lines); y++ {
+		map1[y] = make([]int, width)
+
+		for x := 0; x < len(lines[y]); x++ {
+			map1[y][x] = int(lines[y][x] - '0')
+
+			if len(map2[x]) != height {
+				map2[x] = make([]int, height)
+			}
+
+			map2[x][y] = int(lines[y][x] - '0')
+		}
+	}
+
+	return
+}
+
+func Solve() (part1 int, part2 int) {
+	trees, trees90 := initMaps()
+
 	for i := 0; i < len(trees); i++ {
 		for j := 0; j < len(trees[i]); j++ {
-			t := trees[i][j]
-			tl := treesLeft(trees, j, i)
-			tr := treesRight(trees, j, i)
-			tu := treesUp(trees, j, i)
-			td := treesDown(trees, j, i)
+			tree := Tree{trees[i][j]}
+			left, right := splitAt(trees[i], j)
+			up, down := splitAt(trees90[j], i)
 
-			if allLower(tl, t) || allLower(tr, t) || allLower(tu, t) || allLower(td, t) {
+			if tree.IsHigherThan(left) || tree.IsHigherThan(right) || tree.IsHigherThan(up) || tree.IsHigherThan(down) {
 				part1++
 			}
 
-			cl := countVisible(reverse(tl), t)
-			cr := countVisible(tr, t)
-			cu := countVisible(reverse(tu), t)
-			cd := countVisible(td, t)
+			if i > 0 && i < len(trees)-1 && j > 0 && j < len(trees90)-1 {
+				cl := tree.CountVisibleInReverse(left)
+				cr := tree.CountVisible(right)
+				cu := tree.CountVisibleInReverse(up)
+				cd := tree.CountVisible(down)
 
-			score := cl * cr * cu * cd
+				score := cl * cr * cu * cd
 
-			if score > part2 {
-				part2 = score
+				if score > part2 {
+					part2 = score
+				}
 			}
 		}
 	}
