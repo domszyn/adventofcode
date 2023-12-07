@@ -1,10 +1,6 @@
-const input = ``;
-
-Array.prototype.eq = function (arr) {
-    return this.length == arr.length && arr.every((elem, idx) => elem == this[idx])
-};
-
-const sum = arr => arr.reduce((a, b) => a + b, 0);
+import '../array.js';
+import { parseInput } from '../utils.js';
+import { input } from './input.js';
 
 function countHand(hand) {
     const counts = new Map();
@@ -65,11 +61,10 @@ const compareHands = (a, b) => {
     }
 };
 
-const lines = input.split("\n");
-const hands = lines.map(s => mapHand(s, false)).sort(compareHands);
-const handsWithJokers = lines.map(s => mapHand(s, true)).sort(compareHands);
-
 const getScore = ({ bid }, idx) => bid * (idx + 1);
 
-console.log("Part 1:", sum(hands.map(getScore)));
-console.log("Part 2:", sum(handsWithJokers.map(getScore)));
+const hands = parseInput(input, s => mapHand(s, false)).sort(compareHands);
+const handsWithJokers = parseInput(input, s => mapHand(s, true)).sort(compareHands);
+
+console.log("Part 1:", hands.map(getScore).sum());
+console.log("Part 2:", handsWithJokers.map(getScore).sum());

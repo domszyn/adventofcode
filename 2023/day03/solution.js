@@ -1,13 +1,14 @@
-const input = ``;
+import { parseInput } from '../utils.js';
+import { input } from "./input.js";
 
-const rows = input.split('\n');
+const rows = parseInput(input);
 const matrix = rows.map(s => s.split(''));
 const rowLength = rows[0].length;
 
-var sumOfPartNumbers = 0;
+let sumOfPartNumbers = 0;
 const numbers = new Set('0123456789.');
 
-var gears = new Map();
+const gears = new Map();
 
 function addGear(key, numberStr) {
     if (!gears.has(key)) {
@@ -71,21 +72,17 @@ function isPartNumber(numberStr, rowIndex, startIndex) {
     return false;
 }
 
-function isDigit(char) {
-    return char && char >= '0' && char <= '9';
-}
-
 for (let index = 0; index < rows.length; index++) {
     const row = rows[index];
     for (const match of row.matchAll(/\d+/g)) {
-        var numberStr = match[0];
+        const numberStr = match[0];
         if (isPartNumber(numberStr, index, match.index)) {
             sumOfPartNumbers += parseInt(numberStr)
         }
     }
 }
 
-var sumOfGearRatios = 0;
+let sumOfGearRatios = 0;
 
 for (const g of gears.values()) {
     if (g.length == 2) {

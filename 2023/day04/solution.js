@@ -1,13 +1,13 @@
+import '../array.js';
+import { makeArray, parseInput } from '../utils.js';
+import { input } from './input.js';
 
-const input = ``;
-
-var rows = input.split('\n');
-var cards = new Array(rows.length).fill(1);
+var rows = parseInput(input);
+var cards = makeArray(rows.length, 1);
 
 const getNumbers = c => c.split(' ').filter(s => s != '').map(s => parseInt(s.trim()));
-const sum = arr => arr.reduce((a, b) => a + b, 0);
 
-const part1 = sum(rows.map((s, idx) => {
+const matches = rows.map((s, idx) => {
     const [, card] = s.split(': ');
     const [c1, c2] = card.split(' | ');
     const winningNumbers = new Set(getNumbers(c1));
@@ -19,7 +19,7 @@ const part1 = sum(rows.map((s, idx) => {
     }
 
     return matches == 0 ? 0 : Math.pow(2, matches - 1);
-}));
+});
 
-console.log("Part 1", part1);
-console.log("Part 2", sum(cards));
+console.log("Part 1", matches.sum());
+console.log("Part 2", cards.sum());

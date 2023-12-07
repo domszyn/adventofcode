@@ -1,6 +1,8 @@
-const input = ``;
+import '../array.js';
+import { parseInput } from '../utils.js';
+import { input } from './input.js';
 
-var games = input.split('\n').map(s => {
+var games = parseInput(input, s => {
     var [s1, s2] = s.split(": ");
     var [id] = s1.match(/\d+/);
     var bag = s2
@@ -19,7 +21,7 @@ var games = input.split('\n').map(s => {
         id: parseInt(id),
         bag
     });
-})
+});
 
 const bag = {
     red: 12,
@@ -28,7 +30,6 @@ const bag = {
 };
 
 const possibleGames = games.filter(g => g.bag.blue <= bag.blue && g.bag.green <= bag.green && g.bag.red <= bag.red);
-const sum = arr => arr.reduce((a, b) => a + b, 0);
 
-console.log("Part 1", sum(possibleGames.map(({ id }) => id)));
-console.log("Part 2", sum(games.map(({ bag: { blue, green, red } }) => blue * green * red)));
+console.log("Part 1", possibleGames.map(({ id }) => id).sum());
+console.log("Part 2", games.map(({ bag: { blue, green, red } }) => blue * green * red).sum());

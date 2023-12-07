@@ -1,7 +1,9 @@
-var input = ``;
+import '../array.js';
+import { isDigit, makeArray, parseInput } from "../utils.js";
+import { input } from "./input.js";
 
-var strings = input.split('\n');
-var numbers = Array(strings.length).fill(0);
+var strings = parseInput(input);
+var numbers = makeArray(strings.length, 0);
 
 function wordToNumber(word) {
     switch (word) {
@@ -73,7 +75,7 @@ for (let i = 0; i < strings.length; i++) {
     var found = false;
     for (let j = 0; j < minIndex; j++) {
         const element = message[j];
-        if (element >= '0' && element <= '9') {
+        if (isDigit(element)) {
             numbers[i] += parseInt(element) * 10;
             found = true;
             break
@@ -88,7 +90,7 @@ for (let i = 0; i < strings.length; i++) {
     found = false
     for (let j = message.length - 1; j > maxIndex; j--) {
         const element = message[j];
-        if (element >= '0' && element <= '9') {
+        if (isDigit(element)) {
             numbers[i] += parseInt(element);
             found = true;
             break
@@ -100,5 +102,4 @@ for (let i = 0; i < strings.length; i++) {
 
 }
 
-var sum = numbers.reduce((a, b) => a + b, 0);
-console.log(sum);
+console.log(numbers.sum());

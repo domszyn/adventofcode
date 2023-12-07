@@ -1,8 +1,5 @@
-const start = performance.now();
-const almanac = ``; 
-
-const min = arr => arr.reduce((a, b) => a < b ? a : b, Number.MAX_SAFE_INTEGER);
-const flatten = arr => arr.reduce((a, b) => ([...a, ...b]), []);
+import '../array.js';
+import { almanac } from "./input.js";
 
 function parseAlmanac() {
     const [seedLine, ...rest] = almanac.split('\n');
@@ -37,7 +34,7 @@ function translate(map, source) {
     return mapping ? mapping.destinationStart - mapping.sourceStart + source : source;
 }
 
-const part1 = min(seeds.map(seed => maps.reduce((s, map) => translate(map, s), seed)));
+const part1 = seeds.map(seed => maps.reduce((s, map) => translate(map, s), seed)).min();
 console.log("Part 1", part1);
 
 function translateRange(map, sourceStart, length) {
@@ -75,13 +72,10 @@ for (let i = 0; i < seeds.length; i += 2) {
 }
 input.sort((a, b) => a.sourceStart - b.sourceStart);
 
-const minLocation = min(maps.reduce(
-    (input, output) => flatten(
-        input.map(({ sourceStart, length }) => translateRange(output, sourceStart, length))
-    ),
+const minLocation = maps.reduce(
+    (input, output) => 
+        input.map(({ sourceStart, length }) => translateRange(output, sourceStart, length)).flatten(),
     input
-).map(({ sourceStart }) => sourceStart));
+).map(({ sourceStart }) => sourceStart).min();
 
 console.log("Part 2", minLocation);
-const end = performance.now();
-console.log("Execution time", `${end - start} ms`)

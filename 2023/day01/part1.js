@@ -1,13 +1,15 @@
-var input = ``;
+import '../array.js';
+import { isDigit, makeArray, parseInput } from '../utils.js';
+import { input } from './input.js';
 
-var strings = input.split('\n');
-var numbers = Array(strings.length).fill(0);
+var strings = parseInput(input);
+var numbers = makeArray(strings.length, 0);
 
 for (let i = 0; i < strings.length; i++) {
     var message = strings[i];
     for (let j = 0; j < message.length; j++) {
         const element = message[j];
-        if (element >= '0' && element <= '9') {
+        if (isDigit(element)) {
             numbers[i] += parseInt(element) * 10;
             break
         }
@@ -15,12 +17,11 @@ for (let i = 0; i < strings.length; i++) {
 
     for (let j = message.length - 1; j >= 0; j--) {
         const element = message[j];
-        if (element >= '0' && element <= '9') {
+        if (isDigit(element)) {
             numbers[i] += parseInt(element);
             break
         }
     }
 }
 
-var sum = numbers.reduce((a, b) => a + b, 0);
-console.log(sum);
+console.log(numbers.sum());

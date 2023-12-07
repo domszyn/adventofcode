@@ -1,12 +1,14 @@
-const [times, distances] = input
-    .split('\n')
-    .map(s => s.split(" ").filter(s => s != '').slice(1).map(s => parseInt(s)));
-const races = Array(times.length);
+import '../array.js';
+import { isDigit, makeArray, parseInput } from '../utils.js';
+import { input } from './input.js';
+
+const [times, distances] = parseInput(input, s =>
+    s.split(" ").filter(s => s != '').slice(1).map(s => parseInt(s))
+);
+const races = makeArray(times.length);
 for (let i = 0; i < times.length; i++) {
     races[i] = { time: times[i], distance: distances[i] };
 }
-
-const mul = arr => arr.reduce((a, b) => a * b, 1);
 
 const numWins = r => {
     let wins = 0;
@@ -19,9 +21,9 @@ const numWins = r => {
     return wins;
 };
 
-console.log("Part 1", mul(races.map(numWins)));
+console.log("Part 1", races.map(numWins).multiply());
 
-const [time, distance] = input
-    .split('\n')
-    .map(s => parseInt(s.split('').filter(c => c != ' ').join("").split(":")[1]));
+const [time, distance] = parseInput(input, s => 
+    parseInt(s.split('').filter(isDigit).join(""))
+);
 console.log("Part 2", numWins({ time, distance }));
