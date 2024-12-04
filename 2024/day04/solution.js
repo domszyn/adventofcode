@@ -23,9 +23,21 @@ const checks = [
 ];
 
 const checkXmas = [
+    // M.S
+    // .A.
+    // M.S 
     (i, j) => getLetter(i, j) === 'M' && getLetter(i, j + 2) === 'S' && getLetter(i + 1, j + 1) === 'A' && getLetter(i + 2, j) === 'M' && getLetter(i + 2, j + 2) === 'S',
+    // S.S
+    // .A.
+    // M.M 
     (i, j) => getLetter(i, j) === 'S' && getLetter(i, j + 2) === 'S' && getLetter(i + 1, j + 1) === 'A' && getLetter(i + 2, j) === 'M' && getLetter(i + 2, j + 2) === 'M',
+    // S.M
+    // .A.
+    // S.M 
     (i, j) => getLetter(i, j) === 'S' && getLetter(i, j + 2) === 'M' && getLetter(i + 1, j + 1) === 'A' && getLetter(i + 2, j) === 'S' && getLetter(i + 2, j + 2) === 'M',
+    // M.M
+    // .A.
+    // S.S 
     (i, j) => getLetter(i, j) === 'M' && getLetter(i, j + 2) === 'M' && getLetter(i + 1, j + 1) === 'A' && getLetter(i + 2, j) === 'S' && getLetter(i + 2, j + 2) === 'S',
 ];
 
