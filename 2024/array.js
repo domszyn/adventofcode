@@ -22,6 +22,14 @@ Array.prototype.eq = function (arr) {
     return this.length == arr.length && arr.every((elem, idx) => elem == this[idx]);
 };
 
+Array.prototype.swap = function(i, j) {
+    if (i >= 0 && i < this.length && j >= 0 && j < this.length) {
+        var tmp = this[i];
+        this[i] = this[j];
+        this[j] = tmp;
+    }
+}
+
 export const gcd = (a, b) => {
     while (b != 0) {
         let t = b;
