@@ -8,12 +8,12 @@ updates = parseInput(updates, l => l.split(',').map(n => +n));
 
 const isOrdered = update => {
     let ordered = true;
-    for (let i = 0; ordered && i < update.length - 1; i++) {
+    for (let i = 0; i < update.length - 1; i++) {
         for (let j = i + 1; j < update.length; j++) {
             const rule = update[i] + '|' + update[j];
             if (rules.indexOf(rule) === -1) {
+                update.swap(i, j);
                 ordered = false;
-                break;
             }
         }
     }
@@ -29,15 +29,6 @@ for (const update of updates) {
     if (isOrdered(update)) {
         part1 += middlePage(update);
     } else {
-        for (let i = 0; i < update.length - 1; i++) {
-            for (let j = i + 1; j < update.length; j++) {
-                const rule = update[i] + '|' + update[j];
-                if (rules.indexOf(rule) === -1) {
-                    update.swap(i, j);
-                }
-            }
-        }
-
         part2 += middlePage(update);
     }
 }
