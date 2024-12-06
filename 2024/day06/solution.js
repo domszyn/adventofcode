@@ -91,26 +91,25 @@ const start = ({ row, column, countVisited }) => {
         }
     }
 
-    return [false, visited.size];
+    return [false, visited];
 }
 
 const [, visited] = start({ row: posRow, column: posColumn, countVisited: true });
-console.log("Part 1", visited);
+console.log("Part 1", visited.size);
 
 let part2 = 0;
-for (let row = 0; row < grid.length; row++) {
-    for (let column = 0; column < grid[0].length; column++) {
-        if (grid[row][column] !== '.') {
-            continue;
-        }
-
-        grid[row][column] = '#';
-        const [stuck] = start({ row: posRow, column: posColumn });
-        if (stuck) {
-            part2++;
-        }
-        grid[row][column] = '.';
+for (const pos of visited) {
+    const [row, column] = pos.split(',');
+    if (grid[row][column] !== '.') {
+        continue;
     }
+
+    grid[row][column] = '#';
+    const [stuck] = start({ row: posRow, column: posColumn });
+    if (stuck) {
+        part2++;
+    }
+    grid[row][column] = '.';
 }
 
 console.log("Part 2", part2);
