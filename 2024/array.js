@@ -22,7 +22,7 @@ Array.prototype.eq = function (arr) {
     return this.length == arr.length && arr.every((elem, idx) => elem == this[idx]);
 };
 
-Array.prototype.swap = function(i, j) {
+Array.prototype.swap = function (i, j) {
     if (i >= 0 && i < this.length && j >= 0 && j < this.length) {
         var tmp = this[i];
         this[i] = this[j];
@@ -49,4 +49,45 @@ Array.prototype.first = function () {
 
 Array.prototype.last = function () {
     return this.length > 0 ? this[this.length - 1] : undefined;
+}
+
+Array.prototype.walk = function (from, end, fnIsAdjacent, allowDiagonal) {
+    if (this.length <= 0) return [[]];
+    if (!Array.isArray(this[0])) return [[]];
+
+    const getValue = ({ x, y }) => {
+        if (y < 0 || y >= this.length) return undefined;
+        if (x < 0 || x >= this[0].length) return undefined;
+
+        return this[y][x];
+    }
+
+    const currentValue = getValue(from);
+    if (currentValue === end) return [[from]];
+
+    let neighbors = [
+        { x: from.x + 1, y: from.y },
+        { x: from.x - 1, y: from.y },
+        { x: from.x, y: from.y + 1 },
+        { x: from.x, y: from.y - 1 },
+    ];
+
+    if (allowDiagonal) {
+        neighbors = [
+            ...neighbors,
+            { x: from.x + 1, y: from.y + 1 },
+            { x: from.x + 1, y: from.y - 1 },
+            { x: from.x - 1, y: from.y + 1 },
+            { x: from.x - 1, y: from.y - 1 }
+        ]
+    }
+
+    let paths = [];
+    for (const n of neighbors) {
+        if (fnIsAdjacent(currentValue, getValue(n))) {
+            paths = [...paths, ...this.walk(n, end, fnIsAdjacent, allowDiagonal)];
+        }
+    }
+
+    return paths.map(p => [from, ...p]);
 }
