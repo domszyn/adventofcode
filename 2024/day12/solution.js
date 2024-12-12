@@ -73,8 +73,6 @@ const getPerimeterOld = (region) => {
 }
 
 const getPerimeter = (region, compact) => {
-    const plant = getPlant(region[0]);
-
     let vectors = [];
     for (const { x, y } of region) {
         const rvectors = [
