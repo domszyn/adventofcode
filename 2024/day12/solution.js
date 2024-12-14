@@ -2,18 +2,24 @@ import { input } from "./input.js";
 import { parseInput } from "../utils.js";
 import '../array.js';
 
-const grid = parseInput(input, l => [...l]);
+const getPlants = () => {
+    const grid = parseInput(input, l => [...l]);
 
-const plants = new Map();
-for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {
-        const plant = grid[i][j];
-        if (!plants.has(plant)) {
-            plants.set(plant, []);
+
+    const plants = new Map();
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+            const plant = grid[i][j];
+            if (!plants.has(plant)) {
+                plants.set(plant, []);
+            }
+            plants.set(plant, [...plants.get(plant), { x: j, y: i }]);
         }
-        plants.set(plant, [...plants.get(plant), { x: j, y: i }]);
     }
+
+    return plants;
 }
+
 
 const getNeighbors = (p) => [
     { x: p.x - 1, y: p.y },
@@ -22,7 +28,7 @@ const getNeighbors = (p) => [
     { x: p.x, y: p.y + 1 },
 ];
 
-const groupPlantsIntoRegions = (plants) => {
+export const groupIntoRegions = (plants) => {
     const regions = [];
 
     while (plants.length > 0) {
@@ -130,8 +136,10 @@ const getPerimeter = (region, compact) => {
     return vectors.length;
 }
 
-const plantRegions = [...plants.keys()].map(p => groupPlantsIntoRegions(plants.get(p)));
+export const solve = () => {
+    const plants = getPlants();
+    const plantRegions = [...plants.keys()].map(p => groupIntoRegions(plants.get(p)));
 
-console.log('Part 1', plantRegions.map(pr => pr.map(r => getPerimeter(r) * r.length).sum()).sum());
-
-console.log('Part 2', plantRegions.map(pr => pr.map(r => getPerimeter(r, true) * r.length).sum()).sum());
+    console.log('Part 1', plantRegions.map(pr => pr.map(r => getPerimeter(r) * r.length).sum()).sum())
+    console.log('Part 2', plantRegions.map(pr => pr.map(r => getPerimeter(r, true) * r.length).sum()).sum());
+};

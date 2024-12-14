@@ -13,7 +13,7 @@ for (let y = 0; y < grid.length; y++) {
                 const { x, y } = p.last();
                 return x + ',' + y;
             })).size;
-            part2 += paths.length
+            part2 += paths.length;
         }
     }
 }
