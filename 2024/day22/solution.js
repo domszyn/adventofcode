@@ -28,15 +28,15 @@ const getDiffs = ([p1, p2, p3, p4, p5]) => ([
 ]);
 
 let buyers = new Array(secretNumbers.length);
-let allDiffs = new Set();
+let allBids = new Map();
 for (let i = 0; i < secretNumbers.length; i++) {
     buyers[i] = {
         sn: secretNumbers[i],
         prices: [],
     };
 
-    const bids = new Map();
-    for (let j = 0; j <= 2000; j++) {
+    const buyerBids = new Set();
+    for (let j = 0; j < 2000; j++) {
         if (j > 0) {
             buyers[i].sn = transform(buyers[i].sn)
         }
@@ -47,31 +47,15 @@ for (let i = 0; i < secretNumbers.length; i++) {
         }
         if (buyers[i].prices.length == 5) {
             const diffs = getDiffs(buyers[i].prices).join();
-            if (bids.has(diffs)) {
+            if (buyerBids.has(diffs)) {
                 continue;
             }
-            allDiffs.add(diffs);
-            bids.set(diffs, price);
+            allBids.set(diffs, price + (allBids.get(diffs) ?? 0n));
+            buyerBids.add(diffs);
         }
     }
-    buyers[i].prices = bids;
+    delete (buyers[i].prices);
 }
 
-let maxBid = 0;
-let checked = 0;
-for (const d of allDiffs) {
-    let b = 0n;
-    for (let i = 0; i < buyers.length; i++) {
-        if (buyers[i].prices.has(d)) {
-            b += buyers[i].prices.get(d);
-        }
-    }
-
-    if (b > maxBid) {
-        maxBid = b;
-    }
-    console.log(++checked, allDiffs.size, maxBid);
-}
-
-console.log("Part 1", buyers.map(b => b.sn).sumBigInt());
-console.log("Part 2", maxBid);
+console.log("Part 1", buyers.map(b => b.sn).sumBigInt().toString());
+console.log("Part 2", [...allBids.values()].max().toString());
