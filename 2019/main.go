@@ -48,7 +48,9 @@ func main() {
 			day13.SolvePart2(true, false)
 		case "13 fastwin":
 			day13.SolvePart2(true, true)
-		case "10", "14", "15", "17", "18", "19", "20", "21", "22", "23", "24", "25":
+		case "14":
+			solution.SolveDay14()
+		case "10", "15", "17", "18", "19", "20", "21", "22", "23", "24", "25":
 			fmt.Println("Solution is not ready yet")
 		case "16":
 			solution.SolveDay16()
