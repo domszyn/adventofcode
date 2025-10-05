@@ -131,6 +131,9 @@ func (p *Program) IntCode(input <-chan int, output chan<- int, done chan<- bool)
 			select {
 			case v := <-input:
 				program.WriteValue(instruction.Parameters[0], v)
+			default:
+				// When the input channel is empty, provide -1.
+				program.WriteValue(instruction.Parameters[0], -1)
 			}
 		case 4:
 			output <- program.ReadValue(instruction.Parameters[0])

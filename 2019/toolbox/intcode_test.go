@@ -16,18 +16,14 @@ func TestEqualTo8UsingPositionMode(t *testing.T) {
 	output := make(chan int)
 	done := make(chan bool, 2)
 	go program.IntCode(input, output, done)
-	go program.IntCode(input, output, done)
 	input <- 8
-	select {
-	case result := <-output:
-		assertProgram(t, program, 8, result, 1)
-	}
+	assertProgram(t, program, 8, <-output, 1)
+	<-done
 
+	go program.IntCode(input, output, done)
 	input <- 0
-	select {
-	case result := <-output:
-		assertProgram(t, program, 0, result, 0)
-	}
+	assertProgram(t, program, 0, <-output, 0)
+	<-done
 }
 
 func TestLessThan8UsingPositionMode(t *testing.T) {

@@ -15,6 +15,7 @@ func main() {
 	fmt.Println("Advent of Code 2019")
 
 	solution := solutions.Solution{}
+	solution.SolveDay25()
 	for {
 		fmt.Print("<*> ")
 		text, _ := reader.ReadString('\n')
@@ -38,6 +39,8 @@ func main() {
 			solution.SolveDay8()
 		case "9":
 			solution.SolveDay9()
+		case "10":
+			solution.SolveDay10()
 		case "11":
 			solution.SolveDay11()
 		case "12":
@@ -48,10 +51,30 @@ func main() {
 			day13.SolvePart2(true, false)
 		case "13 fastwin":
 			day13.SolvePart2(true, true)
-		case "10", "14", "15", "17", "18", "19", "20", "21", "22", "23", "24", "25":
-			fmt.Println("Solution is not ready yet")
+		case "14":
+			solution.SolveDay14()
+		case "15":
+			solution.SolveDay15()
 		case "16":
 			solution.SolveDay16()
+		case "17":
+			solution.SolveDay17()
+		case "18":
+			solution.SolveDay18()
+		case "19":
+			solution.SolveDay19()
+		case "20":
+			solution.SolveDay20()
+		case "21":
+			solution.SolveDay21()
+		case "22":
+			solution.SolveDay22()
+		case "23":
+			solution.SolveDay23()
+		case "24":
+			solution.SolveDay24()
+		case "25":
+			solution.SolveDay25()
 		case "quit":
 			os.Exit(0)
 		default:
